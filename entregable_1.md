@@ -113,7 +113,7 @@ SI_DON_ARMANDO_GRITA (
 Si `deuda_dolares` es mayor a `1.000.000` y `cuentas_congeladas` es verdadero, se lanza una excepción financiera con el mensaje **“¡Nos van a quitar Ecomoda!”**.
 
 ```bettyscript
-SEIS_SEMESTRES deuda_dolares = 2000000;
+DEUDA_DE_PATRICIA deuda_dolares = 2000000;
 
 SI_DON_ARMANDO_GRITA (
     deuda_dolares > 1000000
