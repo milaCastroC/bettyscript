@@ -56,7 +56,7 @@ SI_DON_ARMANDO_GRITA (es_del_cuartel == TAN_DIVINO Y_ADEMAS_FLUIDEZ_MAMI (es_hor
 Regla 7: Alerta de deuda y cuentas congeladas
 Si deuda_dolares es mayor a 1.000.000 y cuentas_congeladas es verdadero, se lanza una excepción financiera con el mensaje “¡Nos van a quitar Ecomoda!”.
 
-SEIS_SEMESTRES deuda_dolares = 2000000;
+DEUDA_DE_PATRICIA deuda_dolares = 2000000;
 
 SI_DON_ARMANDO_GRITA (deuda_dolares > 1000000 Y_ADEMAS_FLUIDEZ_MAMI cuentas_congeladas == TAN_DIVINO) AHORA_SI {
     AY_MARCE ExcepcionFinanciera("¡Nos van a quitar Ecomoda!");
