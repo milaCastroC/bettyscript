@@ -45,9 +45,9 @@ El libro ilustra esto con un sistema para la **lógica proposicional**, compuest
 
 Dentro del sistema pueden distinguirse dos ejes principales:
 
-* **Eje sintáctico** —de naturaleza proposicional y analítica—: establece cómo se descompone el lenguaje en proposiciones elementales y compuestas.
+* **Eje sintáctico** de naturaleza proposicional y analítica—: establece cómo se descompone el lenguaje en proposiciones elementales y compuestas.
 
-* **Eje semántico** —de naturaleza representacional—: establece cómo esas proposiciones se relacionan con hechos extralingüísticos.
+* **Eje semántico** de naturaleza representacional—: establece cómo esas proposiciones se relacionan con hechos extralingüísticos.
 
 Además, a un sistema formal se le exigen cuatro características:
 
@@ -61,6 +61,4 @@ Además, a un sistema formal se le exigen cuatro características:
 
 ## Fuente
 
-Pradilla Rueda, M. (2017). *Lenguajes formales y lenguajes computacionales*. Fondo de Publicaciones Corporación Universitaria Republicana.
-
-https://urepublicana.edu.co/images/libros_pdf/978-958-5447-09-7.pdf
+Pradilla Rueda, M. (2017). *Lenguajes formales y lenguajes computacionales*. Fondo de Publicaciones Corporación Universitaria Republicana. https://urepublicana.edu.co/images/libros_pdf/978-958-5447-09-7.pdf
