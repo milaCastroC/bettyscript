@@ -1,64 +1,40 @@
-# Lenguaje Formal
+# Proceso de Construcción de BettyScript y su Fundamentación Teórica
 
-De acuerdo con la autora, un **lenguaje formal** es un lenguaje enteramente simbólico y artificial diseñado en oposición al lenguaje natural u ordinario. En rigor, se define como una cadena de signos construidos y vinculados de acuerdo con reglas estrictas, omitiendo cualquier tipo de interpretación o significado inicial que dichos signos pudieran recibir.
+El lenguaje formal que estamos construyendo recibe el nombre de **“BettyScript”**, cuya sintaxis, tipos de datos y estructuras corresponden a referencias y frases célebres a la telenovela colombiana *“Yo soy Betty, la fea”*. Con este lenguaje buscamos establecer un sistema de signos y reglas donde cada expresión tenga un significado único y verificable, creando un sistema simbólico unívoco y claro que evite los errores de razonamiento e interpretación (Pradilla, 2017, cap. II, "Formalización", pp. 48).
+A partir de cada frase o situación icónica de la novela buscamos traducirlas a una construcción fija del lenguaje de modo que su significado deje de depender del lenguaje natural y pase a depender únicamente de las reglas del sistema.
 
-Su objetivo primordial es sustituir el discurso común, con frecuencia ambiguo y equívoco, por un sistema simbólico unívoco y claro que evite los errores de razonamiento e interpretación.
+---
 
-## Creación de un lenguaje formal
+# 1. Reglas de lenguajes formales
 
-Antes de llegar a la construcción propiamente dicha, la autora señala dos condiciones que todo proceso de formalización presupone:
+Inicialmente tomamos 15 reglas redactadas en lenguaje natural (por ejemplo, "Si `rumor_confirmado` es verdadero, se imprime 'Atención Ecomoda, último minuto'") y las escribimos directamente en su forma simbólica dentro de BettyScript (`SI_DON_ARMANDO_GRITA (...) AHORA_SI {...}`).
 
-* **Constructividad:** los elementos que intervienen deben ser totalmente distinguibles entre sí y del resultado del proceso; se relaciona con lo enumerable (poder identificar cada signo y sustituirlo por otro según reglas), sin llegar a exigir totalizaciones infinitas.
+Cada una de estas reglas ya escritas en símbolos constituye, una **expresión bien formada (F)**. Es decir, una cadena de signos del vocabulario del lenguaje que sigue una gramática (Pradilla, 2017, cap. II, sec. 3.A, "Construcción de un sistema formal", pp. 43-44). Aunque en este paso todavía no hayamos formulado esa gramática de manera explícita y general . Este paso también se enmarca en el proceso general de formalización que describe el libro al sustituir enunciados de un discurso ambiguo e impreciso por un lenguaje simbólico donde cada configuración de signos tiene un significado unívoco.
 
-* **Simbolización:** exige recurrir a símbolos distintos de los del lenguaje ordinario, con un nivel de abstracción suficiente para crear un simbolismo nuevo.
+---
 
-Citando a Martin (1968), el libro detalla los pasos para construir un sistema formal \(S\):
+# 2. Sintaxis de las reglas (Condiciones que se deben establecer)
 
-1. **Vocabulario o alfabeto (Σ):** definir un inventario completo de signos, organizados por categorías, donde cada signo pertenece a una sola categoría.
+Para la sintaxis de las reglas definimos la estructura general que debe cumplir toda declaración y todo condicional (`<declaracion>`, `<condicional>`, `<condicion>`), junto con una convención de escritura definida (mayúsculas para palabras reservadas, `snake_case` para variables, uso obligatorio de paréntesis, llaves y punto y coma).
 
-2. **Palabras (Γ):** combinar los signos del vocabulario en cadenas finitas (palabras), permitiendo la repetición de un mismo signo.
+En este paso formulamos las reglas de formación que definen en general qué es una **F** dentro de BettyScript. El libro exige tres condiciones para esto: cuáles son las expresiones iniciales que ya cuentan como válidas, cómo se combinan expresiones válidas para formar otras nuevas, y una condición de cierre que descarta todo lo que no provenga de las dos anteriores (Pradilla, 2017, cap. II, sec. 3.A, "Construcción de un sistema formal", pp. 43-44). En nuestra sintaxis, una variable o un valor solos son expresiones iniciales válidas, las condiciones se combinan mediante los operadores lógicos del lenguaje, y cualquier combinación fuera de esas reglas queda descartada como error de sintaxis.
 
-3. **Expresiones bien formadas (F):** una fórmula que está escrita correctamente según las reglas del sistema. No importa si tiene sentido o es cierta, solo que esté bien armada. Se define porque:
+---
 
-   * Hay piezas básicas que ya cuentan como válidas de entrada.
-   * Hay reglas para combinar piezas válidas y formar otras más grandes.
-   * Todo lo demás no cuenta.
+# 3. Lexer
 
-4. **Tesis o teoremas (T):** una expresión bien formada que además se puede demostrar dentro del sistema. Se define porque:
+En el siguiente paso elaboramos una tabla de clasificación que agrupa cada signo del lenguaje por categoría (tipos de dato, operadores relacionales y lógicos, condicionales, modificadores de acceso, entre otros), estableciendo además su equivalencia con las construcciones correspondientes de **Java**, que es el lenguaje en el que implementaremos el lexer.
 
-   * Hay casos base que se aceptan como válidos sin necesidad de probarlos (**axiomas**).
-   * Hay reglas para obtener nuevas tesis a partir de tesis ya probadas.
-   * Todo lo demás no cuenta como demostrado.
+El libro nombra explícitamente el **"análisis lexical"** como la primera fase de la compilación: separar la cadena de entrada en subcadenas según categorías sintácticas ya definidas, sin interpretar aún su significado (Pradilla, 2017, cap. V, “Lenguajes de computación y lenguajes formales”, sec. 4, nota 14, pp. 142-143). Eso es justo lo que hace un lexer, y opera sobre el vocabulario o alfabeto (**Σ**) que el libro exige definir primero al construir un sistema formal. En nuestro caso, la tabla de palabras reservadas, literales y operadores de BettyScript.
 
-## Cómo se compone (estructura interna)
+---
 
-Un sistema formal así construido queda compuesto por:
+# 4. Palabras reservadas
 
-* Vocabulario.
-* Expresiones bien formadas (**F**) iniciales.
-* Reglas de formación.
-* Axiomas.
-* Teoremas.
-* Reglas de deducción o transformación.
+Finalmente, en las palabras reservadas fijamos una lista cerrada de palabras clave (`SI_DON_ARMANDO_GRITA`, `FREDDY_ANUNCIA`, `CHISME`, `TAN_DIVINO`, etc.), cada una asociada a un único significado técnico equivalente a una construcción de Java (`if`, `print()`, `String`, `true`).
 
-El libro ilustra esto con un sistema para la **lógica proposicional**, compuesto por variables, conectores como `⌐`, `V`, `⊃` y `∧`, signos de puntuación, reglas de sustitución y *modus ponens*.
+Este paso corresponde a dos de las características que el libro exige a todo lenguaje formal, presentadas en la sección **"Características del lenguaje formal"** (Pradilla, 2017,Cap. II, “Características del lenguaje formal”, p. 58): que sea **unívoco** (a cada nombre le corresponde un solo objeto o significado) y que tenga **funcionalidad** (a cada signo le corresponde una función). También se apoya en la explicación sobre la designación de signos en el metalenguaje, donde se indica que a cada símbolo corresponde un nombre y a cada nombre un solo símbolo (Pradilla, 2017, cap. ll, “Características del lenguaje formal” pp. 60-61) . Esto es lo que nos garantiza que, por ejemplo, `TAN_DIVINO` siempre representa el valor booleano verdadero y nunca otra cosa.
 
-Dentro del sistema pueden distinguirse dos ejes principales:
+---
 
-* **Eje sintáctico** de naturaleza proposicional y analítica—: establece cómo se descompone el lenguaje en proposiciones elementales y compuestas.
-
-* **Eje semántico** de naturaleza representacional—: establece cómo esas proposiciones se relacionan con hechos extralingüísticos.
-
-Además, a un sistema formal se le exigen cuatro características:
-
-1. **Ser explícito:** sus reglas y componentes deben estar claramente establecidos.
-2. **Ser unívoco:** a cada nombre debe corresponder un objeto.
-3. **Tener funcionalidad:** a cada signo debe corresponder una función determinada.
-4. **Mantener una distinción de niveles lógicos:** debe separar:
-
-   * El **lenguaje-objeto**, con el que se construyen las expresiones.
-   * El **metalenguaje**, es decir, el lenguaje —por ejemplo, el español— utilizado para hablar sobre esas expresiones y estudiar su sintaxis y su semántica.
-
-## Fuente
-
-Pradilla Rueda, M. (2017). *Lenguajes formales y lenguajes computacionales*. Fondo de Publicaciones Corporación Universitaria Republicana. https://urepublicana.edu.co/images/libros_pdf/978-958-5447-09-7.pdf
+**Fuente:** Pradilla Rueda, M. (2017). *Lenguajes formales y lenguajes computacionales*. Fondo de Publicaciones Corporación Universitaria Republicana. https://urepublicana.edu.co/images/libros_pdf/978-958-5447-09-7.pdf
