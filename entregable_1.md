@@ -282,114 +282,256 @@ SI_DON_ARMANDO_GRITA (mercedes_rayado == TAN_DIVINO) AHORA_SI {
 
 # 5. Sintaxis general de las reglas
 
-## 5.1. Declaraciones
+---
+
+## 5.1. Bloques
+
+### `<instrucciones>`
+
+```text
+<instrucciones> ::= <sentencia> | <sentencia> <instrucciones>
+```
+
+### `<sentencia>`
+
+```text
+<sentencia> ::= <declaracion> | <asignacion> | <condicional> | <impresion> | <manejo_error> | <lanzar_error>
+```
+
+### `<bloque>`
+
+```text
+<bloque> ::= { <instrucciones> }
+```
+
+---
+
+## 5.2. Declaración y asignación
 
 ### `<declaracion>`
 
 ```text
-[<modificador>] <tipo_dato> <variable> = <valor> ;
+<declaracion> ::= <tipo_dato> <identificador> = <expresion> ;
 ```
 
-### `<modificador>`
+### `<asignacion>`
 
 ```text
-BAJE_LA_VOZ_BEATRIZ
-|
-QUE_SE_ENTERE_TODA_ECOMODA
+<asignacion> ::= <identificador> = <expresion> ;
 ```
+
+---
+
+## 5.3. Tipos, literales y valores
 
 ### `<tipo_dato>`
 
 ```text
-SEIS_SEMESTRES
-|
-DEUDA_DE_PATRICIA
-|
-CHISME
-```
-
-### `<variable>`
-
-```text
-identificador_en_minusculas
+<tipo_dato> ::= SEIS_SEMESTRES | DEUDA_DE_PATRICIA | CHISME
 ```
 
 ### `<valor>`
 
 ```text
-numero
-|
-numero_decimal
-|
-"texto"
-|
-TAN_DIVINO
-|
-PELITEÑIDA
-|
-MOSCORROFIO
+<valor> ::= <identificador> | <literal>
+```
+
+### `<literal>`
+
+```text
+<literal> ::= <literal_numerico> | <cadena> | <booleano> | <nulo>
+```
+
+### `<literal_numerico>`
+
+```text
+<literal_numerico> ::= <numero_entero> | <numero_decimal>
+```
+
+### `<valor_numerico>`
+
+```text
+<valor_numerico> ::= <identificador> | <literal_numerico>
+```
+
+### `<booleano>`
+
+```text
+<booleano> ::= TAN_DIVINO | PELITEÑIDA
+```
+
+### `<nulo>`
+
+```text
+<nulo> ::= MOSCORROFIO
+```
+
+### `<identificador>`
+
+```text
+<identificador> ::= <letra> | <letra> <resto_identificador>
+```
+
+### `<resto_identificador>`
+
+```text
+<resto_identificador> ::= <caracter_identificador> | <caracter_identificador> <resto_identificador>
+```
+
+### `<caracter_identificador>`
+
+```text
+<caracter_identificador> ::= <letra> | <digito> | “_”
+```
+
+### `<letra>`
+
+```text
+<letra> ::= a | b | ... | z | A | B | ... | Z
+```
+
+### `<digito>`
+
+```text
+<digito> ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+```
+
+### `<alfanumerico>`
+
+```text
+<alfanumerico> := <letra> | <digito> | <caracter_especial>
+```
+
+### `<caracter_especial>`
+
+```text
+<caracter_especial> := ! | @ | # | $ | % | ^ | & | * | ( | ) | - | _ | + | = | [ | ] | { | } | < | > | / | \\ | : | ; | , | . | ? | ~ | ` | ¡ | ¿
+```
+
+### `<numero_entero>`
+
+```text
+<numero_entero> ::= <digito> | <digito> <numero_entero>
+```
+
+### `<numero_decimal>`
+
+```text
+<numero_decimal> ::= <numero_entero> . <numero_entero>
+```
+
+### `<cadena>`
+
+```text
+<cadena> ::= <alfanumerico> | <alfanumerico> <cadena>
 ```
 
 ---
 
-## 5.2. Condiciones
+## 5.4. Expresiones aritméticas
 
-### `<condicional>`
+### `<expresion_aritmetica>`
 
 ```text
-SI_DON_ARMANDO_GRITA (<condicion>) AHORA_SI {
-    <accion>
-}
-[PERDONEME_PERO_DISCULPEME {
-    <accion>
-}]
+<expresion_aritmetica> ::= <operacion> | <valor_numerico> | (<operacion>)
+```
+
+### `<operacion>`
+
+```text
+<operacion> ::= <expresion_aritmetica> <operador> <expresion_aritmetica>
+```
+
+### `<operador>`
+
+```text
+<operador> ::= + | - | * | / | %
+```
+
+---
+
+## 5.5. Expresiones lógicas
+
+### `<expresion>`
+
+```text
+<expresion> ::= <expresion_aritmetica> | <valor>
 ```
 
 ### `<condicion>`
 
-**Forma 1 — Condición relacional**
-
 ```text
-(<variable> <operador_relacional> <valor>)
+<condicion> ::= <expresion_logica> | NI_POR_EL_CHIRAS <condicion_simple> | ( <expresion_logica> )
 ```
 
-**Forma 2 — Condición con operadores lógicos**
+### `<expresion_logica>`
 
 ```text
-(<condicion> <operador_logico> <condicion>)
+<expresion_logica> ::= <condicion_simple> | <expresion_logica> <operador_logico> <condicion_simple>
+                    | <expresion_logica> <operador_logico> ( <expresion_logica> )
 ```
 
-**Forma 3 — Condición con negación**
+### `<condicion_simple>`
 
 ```text
-(NI_POR_EL_CHIRAS <condicion>)
+<condicion_simple> ::= <comparacion> | <identificador>
+```
+
+### `<comparacion>`
+
+```text
+<comparacion> ::= <expresion> <operador_relacional> <expresion>
 ```
 
 ### `<operador_relacional>`
 
 ```text
-== | != | > | < | >= | <=
+<operador_relacional> ::= == | > | < | >= | <=
 ```
 
 ### `<operador_logico>`
 
 ```text
-Y_ADEMAS_FLUIDEZ_MAMI
-|
-SI_NO_ES_ESTO_ES_AQUELLO
-```
-
-### `<accion>`
-
-```text
-FREDDY_ANUNCIA("texto");
-|
-AY_MARCE Excepcion("texto");
-|
-ENTREGUE_EL_BALANCE <valor>;
+<operador_logico> ::= Y_ADEMAS_FLUIDEZ_MAMI | SI_NO_ES_ESTO_ES_AQUELLO
 ```
 
 ---
+
+## 5.6. Condicionales
+
+### `<condicional>`
+
+```text
+<condicional> ::= "SI_DON_ARMANDO_GRITA ( <condicion> ) AHORA_SI <bloque>
+               | SI_DON_ARMANDO_GRITA ( <condicion> ) AHORA_SI <bloque> PERDONEME_PERO_DISCULPEME <bloque>
+```
+
+---
+
+## 5.7. Impresion
+
+### `<impresion>`
+
+```text
+<impresion> ::= FREDDY_ANUNCIA ( <expresion> ) ;
+```
+
+---
+
+## 5.8. Lanzamiento y manejo de errores
+
+### `<lanzar_error>`
+
+```text
+<lanzar_error> ::= AY_MARCE <identificador> ( <cadena> ) ;
+```
+
+### `<manejo_error>`
+
+```text
+<manejo_error> ::= MAQUILLAR_BALANCE <bloque> EL_DIABLO_ES_PUERCO ( <identificador> ) <bloque>
+```
+
 
 # 6. Descripción de palabras reservadas principales
 
