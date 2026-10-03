@@ -8,7 +8,8 @@
 - **04** · [Literales](#literales)
 - **05** · [Condicionales](#condicionales)
 - **06** · [Impresión](#impresion)
-- **07** · [Sintaxis completa](#sintaxis-completa)
+- **07** · [Comentarios](#comentarios)
+- **08** · [Sintaxis completa](#sintaxis-completa)
 
 ---
 
@@ -35,7 +36,7 @@
 
 <digito> ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 
-<expresion> ::= <expresion_aritmetica> | <expresion_cadena> | <expresion_booleana>
+<expresion> ::= <expresion_aritmetica> | <cadena> | <expresion_booleana>
 
 <expresion_aritmetica> ::= <operacion> | <valor_numerico> | (<operacion>)
 
@@ -95,7 +96,7 @@
 
 <digito> ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
 
-<expresion> ::= <expresion_aritmetica> | <expresion_cadena> | <expresion_booleana>
+<expresion> ::= <expresion_aritmetica> | <cadena> | <expresion_booleana>
 
 <expresion_aritmetica> ::= <operacion> | <valor_numerico> | (<operacion>)
 
@@ -260,7 +261,7 @@
 
 <tipo_dato> ::= SEIS_SEMESTRES | DEUDA_DE_PATRICIA | CHISME
 
-<expresion> ::= <expresion_aritmetica> | <expresion_cadena> | <expresion_booleana>
+<expresion> ::= <expresion_aritmetica> | <cadena> | <expresion_booleana>
 
 <asignacion> ::= <identificador> = <expresion> ;
 
@@ -284,7 +285,7 @@
 ### Reglas derivadas
 
 ```bnf
-<expresion> ::= <expresion_aritmetica> | <expresion_cadena> | <expresion_booleana>
+<expresion> ::= <expresion_aritmetica> | <cadena> | <expresion_booleana>
 
 <expresion_aritmetica> ::= <operacion> | <valor_numerico> | (<operacion>)
 
@@ -333,9 +334,38 @@
 
 ---
 
+<a id="comentarios"></a>
+
+## 07 · Comentarios
+
+```bnf
+<comentario>::= OJO_PUES <cadena>
+```
+
+### Reglas derivadas
+
+```bnf
+<cadena> ::= <alfanumerico> | <alfanumerico> <cadena>
+
+<alfanumerico> := <letra> | <digito> | <caracter_especial>
+
+<caracter_especial> := ! | @ | # | $ | % | ^ | & | * | ( | ) | - | _ | + | = | [ | ] | { | } | < | > | / | \ | : | ;  | , | . | ? | ~ | ` | ¡ | ¿ |
+
+
+<digito> ::= 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+
+<numero_decimal> ::= <numero_entero> . <numero_entero>
+
+<identificador> ::= <letra> | <letra> <resto_identificador>
+
+<letra> ::= a | b | ... | z | A | B | ... | Z
+
+```
+---
+
 <a id="sintaxis-completa"></a>
 
-## 07 · Sintaxis completa
+## 08 · Sintaxis completa
 
 # Sintaxis BettyScript Completa
 
