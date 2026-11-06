@@ -11,11 +11,3 @@ class Parser: # 1. se define la plantilla
 
     def avanzar(self): # 6. acción: mueve el dedo una posición
         self.pos += 1   
-
-class ErrorLexico(Exception):
-    def __init__(self, mensaje, linea, columna):
-        super().__init__(
-            f"Error léxico en línea {linea}, columna {columna}: {mensaje}"
-        )
-        self.linea = linea
-        self.columna = columna

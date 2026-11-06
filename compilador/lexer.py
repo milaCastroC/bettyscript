@@ -1,6 +1,8 @@
+from tokens import Token, ErrorLexico
+
 #Implementación BettyScript
 TIPOS = {"SEIS_SEMESTRES", "DEUDA_DE_PATRICIA", "CHISME", "BOOLEAN"}
-SIMBOLOS = {";", "(", ")", "{", "}", "[", "]", "/", "=", "<", ">", "!", "."}
+SIMBOLOS = {";", "(", ")", "{", "}", "[", "]", "/", "=", "!", "."}
 OPERADORES = {"+", "-", "*", ">", "<"}
 OPERADORES_DOBLES = ("==", "!=", "<=", ">=")
 PALABRAS_RESERVADAS = {"MOSCORROFIO", "SI_DON_ARMANDO_GRITA", "AHORA_SI", "PERDONEME_PERO_DISCULPEME", "NI_POR_EL_CHIRAS", "Y_ADEMAS_FLUIDEZ_MAMI", "SI_NO_ES_ESTO_ES_AQUELLO", "FREDDY_ANUNCIA", "MAQUILLAR_BALANCE", "EL_DIABLO_ES_PUERCO", "AY_MARCE"}
@@ -36,17 +38,17 @@ def tokenizar(texto):
                 i += 1
 
                 if i == len(texto) or not texto[i].isdigit():
-                    raise SyntaxError(f"Error NaN: Decimal mal formado en línea {row}, columna{col}")
+                    raise ErrorLexico(f"Error NaN: Decimal mal formado", row, col)
                 
                 while i < len(texto) and texto[i].isdigit():
                     i += 1
 
                 if i < len(texto) and texto[i].isdigit():
-                    raise SyntaxError(f"Error NaN: Decimal mal formado en línea {row}, columna{col}")
+                    raise ErrorLexico(f"Error NaN: Decimal mal formado", row, col)
                 
-                tokens.append(("DEUDA_DE_PATRICIA", texto[inicio:i], row, col))
+                tokens.append(Token("DEUDA_DE_PATRICIA", texto[inicio:i], row, col))
             else:
-                tokens.append(("NUMERO", texto[inicio:i], row, col))
+                tokens.append(Token("NUMERO", texto[inicio:i], row, col))
             col += len(texto[inicio:i])
         elif c == "'":
             inicio = i
@@ -57,10 +59,10 @@ def tokenizar(texto):
                 i += 1
 
             if i == len(texto) or texto[i] == "\n":
-                raise SyntaxError(f"Error léxico: cadena sin cerrar en línea {row}, columna{inicio_col}")
+                raise ErrorLexico(f"Cadena sin cerrar", row, col)
             
             i += 1
-            tokens.append(("CHISME", texto[inicio:i], row, col))
+            tokens.append(Token("CHISME", texto[inicio:i], row, col))
             col += len(texto[inicio:i])
         elif c.isalpha():
             inicio = i
@@ -68,11 +70,11 @@ def tokenizar(texto):
                 i += 1
             palabra = texto[inicio:i]
             if palabra in TIPOS:
-                tokens.append(("TIPO", palabra, row, col))
+                tokens.append(Token("TIPO", palabra, row, col))
             elif palabra in PALABRAS_RESERVADAS:
-                tokens.append(("PALABRA_RESERVADA", palabra, row, col))
+                tokens.append(Token("PALABRA_RESERVADA", palabra, row, col))
             elif palabra in BOOLEANOS:
-                tokens.append(("BOOLEANO", palabra, row, col))
+                tokens.append(Token("BOOLEANO", palabra, row, col))
             elif palabra == COMENTARIO:
                 while i < len(texto) and texto[i] != "\n":
                     i += 1
@@ -93,48 +95,62 @@ def tokenizar(texto):
                         col += 1
                     i += 1
                 if not cerrado:
-                    raise SyntaxError(f"Error léxico en línea {row0}, columna {col0}: comentario sin cerrar")
+                    raise ErrorLexico(f"Comentario sin cerrar", row0, col0)
                 continue
               
             else:
-                tokens.append(("IDENTIFICADOR", texto[inicio:i], row, col))
+                tokens.append(Token("IDENTIFICADOR", texto[inicio:i], row, col))
             
            
             col+=len(palabra)
         
         elif texto.startswith (OPERADORES_DOBLES, i):
-            tokens.append(("OPERADOR DOBLE", texto[i:i+2], row, col))
+            tokens.append(Token("OPERADOR DOBLE", texto[i:i+2], row, col))
             i += 2
             col += 2
 
         elif c in SIMBOLOS:
             if c == ";":
-                tokens.append(("FIN", c, row, col))
+                tokens.append(Token("FIN_LINEA", c, row, col))
             elif c == "=":
-                tokens.append(("IGUAL_ASIGNACION", c, row, col))
+                tokens.append(Token("IGUAL_ASIGNACION", c, row, col))
             else:
-                tokens.append(("SIMBOLO", c, row, col))
+                tokens.append(Token("SIMBOLO", c, row, col))
             i += 1
             col += 1
         elif c in OPERADORES:
-            tokens.append(("OPERADOR", c, row, col))
+            tokens.append(Token("OPERADOR", c, row, col))
             i += 1
             col += 1
         else:
-            raise SyntaxError(f"Error léxico: carácter inesperado '{c}' en línea {row}, columna {col}")
-    
-    tokens.append(("EOF", c, row, col))
+            raise ErrorLexico(f"Carácter inesperado '{c}'", row, col)
+
+    tokens.append(Token("EOF", "", row, col))
     return tokens
 
-#try:
-#     print(lexer.tokenizar("(a+b)*2;"))
-#     print(lexer.tokenizar("system.out"))
-#     print(lexer.tokenizar("x >= 3.14;"))
-#     print(lexer.tokenizar("SI_DON_ARMANDO_GRITA (coleccion_actual == MOSCORROFIO) AHORA_SI {FREDDY_ANUNCIA('¡Hugo se quedó sin conceptos!');"))
-#     print(lexer.tokenizar("CARTA_DE_ ARMANDO hola SALUDOS_CORDIALES"))
+# try:
+#     print("\n------------------Válido 1 - Simple------------------")
+#     for token in tokenizar("SEIS_SEMESTRES total = a + 7 * 9;"):
+#         print(token)
 
+#     print("\n------------------Válido 2 - Sin espacios------------------")
+#     for token in tokenizar("chismecito='BettyScript';"):
+#         print(token)
 
+#     print("\n------------------Válido 3 - Dos líneas y comentario------------------")
+#     for token in tokenizar("CHISME saludo = 'hola'; OJO_PUES comentario\nDEUDA_DE_PATRICIA precio = 3.14;"):
+#         print(token)
 
+#     # print("\n------------------Inválido 1 - Carácter que no existe------------------")
+#     # print(tokenizar("@SEIS_SEMESTRES35.865BFJSDH"))
     
+#     print("\n------------------Inválido 2 - Decimal incorrecto------------------")
+#     for token in tokenizar("double x = 12.544.7"):
+#         print(token)
+
+#     print("\n------------------Inválido 3 - Error segunda línea------------------")
+#     for token in tokenizar("SEIS_SEMESTRES edad = 5;\nCHISME saludo = 'hola"):
+#         print(token)
+
 # except SyntaxError as e:
 #     print(e)

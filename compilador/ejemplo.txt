@@ -1,0 +1,16 @@
+
+int x = 5;
+
+CARTA_DE_ARMANDO
+SI_DON_ARMANDO_GRITA (coleccion_actual == MOSCORROFIO) AHORA_SI { FREDDY_ANUNCIA('¡Hugo se quedó sin conceptos!'); }
+
+estado_actual = 'En crisis';
+
+SEIS_SEMESTRES presupuesto_diseno = 3500;
+
+SI_DON_ARMANDO_GRITA (armando_presente == TAN_DIVINO) AHORA_SI { FREDDY_ANUNCIA('Paso la llamada a presidencia.'); } PERDONEME_PERO_DISCULPEME { FREDDY_ANUNCIA('El doctor se encuentra en una reunión muy importante.');}
+
+DEUDA_DE_PATRICIA deuda_dolares = 2000000;
+
+SI_DON_ARMANDO_GRITA (saldo_celular == 0) AHORA_SI {FREDDY_ANUNCIA('Por favor, ¿me presta para una llamadita?');} 
+SALUDOS_CORDIALES
