@@ -1,4 +1,3 @@
-
 int x = 5;
 
 CARTA_DE_ARMANDO

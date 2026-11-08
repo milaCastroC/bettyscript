@@ -127,30 +127,3 @@ def tokenizar(texto):
 
     tokens.append(Token("EOF", "", row, col))
     return tokens
-
-# try:
-#     print("\n------------------Válido 1 - Simple------------------")
-#     for token in tokenizar("SEIS_SEMESTRES total = a + 7 * 9;"):
-#         print(token)
-
-#     print("\n------------------Válido 2 - Sin espacios------------------")
-#     for token in tokenizar("chismecito='BettyScript';"):
-#         print(token)
-
-#     print("\n------------------Válido 3 - Dos líneas y comentario------------------")
-#     for token in tokenizar("CHISME saludo = 'hola'; OJO_PUES comentario\nDEUDA_DE_PATRICIA precio = 3.14;"):
-#         print(token)
-
-#     # print("\n------------------Inválido 1 - Carácter que no existe------------------")
-#     # print(tokenizar("@SEIS_SEMESTRES35.865BFJSDH"))
-    
-#     print("\n------------------Inválido 2 - Decimal incorrecto------------------")
-#     for token in tokenizar("double x = 12.544.7"):
-#         print(token)
-
-#     print("\n------------------Inválido 3 - Error segunda línea------------------")
-#     for token in tokenizar("SEIS_SEMESTRES edad = 5;\nCHISME saludo = 'hola"):
-#         print(token)
-
-# except SyntaxError as e:
-#     print(e)

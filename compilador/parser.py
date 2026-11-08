@@ -1,13 +1,11 @@
-import lexer
+class Parser:
 
-class Parser: # 1. se define la plantilla
+    def __init__(self, tokens):
+        self.tokens = tokens
+        self.pos = 0
 
-    def __init__(self, tokens): # 2. se ejecuta solo al crear un Parser
-        self.tokens = tokens # 3. guarda la lista dentro del objeto
-        self.pos = 0 # 4. el dedo: empieza en el token 0
-
-    def actual(self): # 5. acción: dice en qué token va el dedo
+    def actual(self):
         return self.tokens[self.pos]
 
-    def avanzar(self): # 6. acción: mueve el dedo una posición
+    def avanzar(self):
         self.pos += 1   
