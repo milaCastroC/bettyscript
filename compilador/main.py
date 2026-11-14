@@ -10,15 +10,15 @@ if __name__ == "__main__":
         programa = Parser(tokenizar(contenido)).programa()
         mostrar_arbol(programa)
 
-        tokens = tokenizar(contenido)
+        # tokens = tokenizar(contenido)
 
-        print(f"{'LINEA':<6}{'COL':<5}{'TIPO':<20}TEXTO")
-        for token in tokens:
-            print(f"{token.linea:<6}{token.columna:<5}{token.tipo:<20}{token.texto}")
+        # print(f"{'LINEA':<6}{'COL':<5}{'TIPO':<20}TEXTO")
+        # for token in tokens:
+        #     print(f"{token.linea:<6}{token.columna:<5}{token.tipo:<20}{token.texto}")
 
-        print("-------------------------------------")
-        for token in tokens:
-            print(token)
+        # print("-------------------------------------")
+        # for token in tokens:
+        #     print(token)
 
     except ErrorDeLenguaje as e:
         print(e)
