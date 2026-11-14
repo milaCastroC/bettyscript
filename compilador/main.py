@@ -1,10 +1,15 @@
 from lexer import tokenizar
-from tokens import ErrorLexico
+from tokens import ErrorDeLenguaje
+from parser import Parser
+from arbol import mostrar_arbol
 
 if __name__ == "__main__":
     with open("ejemplo.txt", "r", encoding="utf-8") as f:
         contenido = f.read()
     try:
+        programa = Parser(tokenizar(contenido)).programa()
+        mostrar_arbol(programa)
+
         tokens = tokenizar(contenido)
 
         print(f"{'LINEA':<6}{'COL':<5}{'TIPO':<20}TEXTO")
@@ -15,5 +20,5 @@ if __name__ == "__main__":
         for token in tokens:
             print(token)
 
-    except ErrorLexico as e:
+    except ErrorDeLenguaje as e:
         print(e)

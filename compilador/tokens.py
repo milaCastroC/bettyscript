@@ -9,13 +9,19 @@ class Token:
 
     def __str__(self):
         return f"{self.tipo}('{self.texto}') en {self.linea}:{self.columna}"
-    
-class ErrorLexico(Exception):
+
+class ErrorDeLenguaje(Exception):
+    fase = "Error"
+
     def __init__(self, mensaje, linea, columna):
-        super().__init__(
-            f"Error léxico en línea {linea}, columna {columna}: {mensaje}"
-        )
+        self.mensaje = mensaje
         self.linea = linea
         self.columna = columna
+        super().__init__(f"{self.fase} en línea {linea}, columna {columna}: {mensaje}")
 
+class ErrorLexico(ErrorDeLenguaje):
+    fase = "Error léxico"
+
+class ErrorSintactico(ErrorDeLenguaje):
+    fase = "Error sintáctico"    
         

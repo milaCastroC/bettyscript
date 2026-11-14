@@ -2,8 +2,8 @@ from tokens import Token, ErrorLexico
 
 #Implementación BettyScript
 TIPOS = {"SEIS_SEMESTRES", "DEUDA_DE_PATRICIA", "CHISME", "BOOLEAN"}
-SIMBOLOS = {";", "(", ")", "{", "}", "[", "]", "/", "=", "!", "."}
-OPERADORES = {"+", "-", "*", ">", "<"}
+SIMBOLOS = {";", "(", ")", "{", "}", "[", "]","=", "!", "."}
+OPERADORES = {"+", "-", "*", ">", "<", "/"}
 OPERADORES_DOBLES = ("==", "!=", "<=", ">=")
 PALABRAS_RESERVADAS = {"MOSCORROFIO", "SI_DON_ARMANDO_GRITA", "AHORA_SI", "PERDONEME_PERO_DISCULPEME", "NI_POR_EL_CHIRAS", "Y_ADEMAS_FLUIDEZ_MAMI", "SI_NO_ES_ESTO_ES_AQUELLO", "FREDDY_ANUNCIA", "MAQUILLAR_BALANCE", "EL_DIABLO_ES_PUERCO", "AY_MARCE"}
 BOOLEANOS = {"TAN_DIVINO", "PELITEÑIDA"}
@@ -46,7 +46,7 @@ def tokenizar(texto):
                 if i < len(texto) and texto[i].isdigit():
                     raise ErrorLexico(f"Error NaN: Decimal mal formado", row, col)
                 
-                tokens.append(Token("DEUDA_DE_PATRICIA", texto[inicio:i], row, col))
+                tokens.append(Token("NUMERO", texto[inicio:i], row, col))
             else:
                 tokens.append(Token("NUMERO", texto[inicio:i], row, col))
             col += len(texto[inicio:i])
@@ -62,7 +62,7 @@ def tokenizar(texto):
                 raise ErrorLexico(f"Cadena sin cerrar", row, col)
             
             i += 1
-            tokens.append(Token("CHISME", texto[inicio:i], row, col))
+            tokens.append(Token("CADENA", texto[inicio:i], row, col))
             col += len(texto[inicio:i])
         elif c.isalpha():
             inicio = i
@@ -74,7 +74,7 @@ def tokenizar(texto):
             elif palabra in PALABRAS_RESERVADAS:
                 tokens.append(Token("PALABRA_RESERVADA", palabra, row, col))
             elif palabra in BOOLEANOS:
-                tokens.append(Token("BOOLEANO", palabra, row, col))
+                tokens.append(Token("BOOLEAN", palabra, row, col))
             elif palabra == COMENTARIO:
                 while i < len(texto) and texto[i] != "\n":
                     i += 1
@@ -110,12 +110,7 @@ def tokenizar(texto):
             col += 2
 
         elif c in SIMBOLOS:
-            if c == ";":
-                tokens.append(Token("FIN_LINEA", c, row, col))
-            elif c == "=":
-                tokens.append(Token("IGUAL_ASIGNACION", c, row, col))
-            else:
-                tokens.append(Token("SIMBOLO", c, row, col))
+            tokens.append(Token("SIMBOLO", c, row, col))
             i += 1
             col += 1
         elif c in OPERADORES:

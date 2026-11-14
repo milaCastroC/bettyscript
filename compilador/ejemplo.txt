@@ -1,4 +1,8 @@
-int x = 5;
+SEIS_SEMESTRES edad = 20;
+nota = edad / 4.0;
+DEUDA_DE_PATRICIA deuda = 999999.9999;
+SEIS_SEMESTRES r = 10 - 3 - 2;
+r = (1 + 2);
 
 CARTA_DE_ARMANDO
 SI_DON_ARMANDO_GRITA (coleccion_actual == MOSCORROFIO) AHORA_SI { FREDDY_ANUNCIA('¡Hugo se quedó sin conceptos!'); }
