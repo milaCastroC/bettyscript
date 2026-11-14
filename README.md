@@ -236,3 +236,44 @@ SI_DON_ARMANDO_GRITA (mercedes_rayado == TAN_DIVINO) AHORA_SI {
 | `saldo_celular` | `int` | `0` |
 | `mercedes_rayado` | `boolean` | `true` |
 
+## Reglas de operaciones entre tipos de datos
+
+BettyScript permite realizar operaciones aritméticas únicamente entre valores numéricos, correspondientes a los tipos `SEIS_SEMESTRES` (entero) y `DEUDA_DE_PATRICIA` (decimal).
+
+### Operadores permitidos
+
+| Operador | Descripción | Regla |
+|---|---|---|
+| `+` | Suma | Acepta enteros y decimales. |
+| `-` | Resta | Acepta enteros y decimales. |
+| `*` | Multiplicación | Acepta enteros y decimales. |
+| `/` | División | Entre enteros produce un entero; si interviene un decimal, produce un decimal. |
+
+### Restricciones
+
+- No se permiten operaciones aritméticas entre cadenas (`CHISME`).
+- No se permiten operaciones entre valores numéricos y cadenas.
+- Los valores booleanos no pueden utilizarse como operandos aritméticos.
+- La división entre cero produce un error semántico.
+- Los errores semánticos indican la línea y columna del operador que ocasionó el problema.
+
+### Ejemplos
+
+**Válido:**
+
+```bettyscript
+SEIS_SEMESTRES a = 7;
+DEUDA_DE_PATRICIA b = 2.0;
+FREDDY_ANUNCIA(a / b);
+```
+
+Salida: `3.5`
+
+**Inválido:**
+
+```bettyscript
+CHISME mensaje = 'Hola';
+FREDDY_ANUNCIA(mensaje + 5);
+```
+
+Resultado: error semántico por operación entre valores no numéricos.

@@ -25,6 +25,11 @@ class Asignacion:
     valor: object
 
 @dataclass
+class Mostrar:
+    palabra: Token
+    valor: object
+
+@dataclass
 class Programa:
     instrucciones: list
 
@@ -49,6 +54,10 @@ def mostrar_arbol(nodo, nivel=0):
 
     elif isinstance(nodo, Asignacion):
         print(f"{espacio}Asignacion {nodo.nombre.texto}")
+        mostrar_arbol(nodo.valor, nivel + 1)
+
+    elif isinstance(nodo, Mostrar):
+        print(f"{espacio}Mostrar {nodo.palabra.texto}")
         mostrar_arbol(nodo.valor, nivel + 1)
 
     elif isinstance(nodo, OperacionBinaria):

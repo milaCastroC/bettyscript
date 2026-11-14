@@ -1,0 +1,134 @@
+from tokens import ErrorSemantico
+from arbol import (
+    Numero,
+    Variable,
+    Cadena,
+    OperacionBinaria,
+    Declaracion,
+    Asignacion,
+    Mostrar,
+    Programa
+)
+
+ACEPTA = {
+    "SEIS_SEMESTRES": (int,),
+    "DEUDA_DE_PATRICIA": (int, float),
+    "CHISME": (str,)
+}
+
+
+
+class Interprete:
+    def __init__(self):
+        self.entorno={}
+
+    def evaluar (self, nodo):
+        if isinstance (nodo, Numero):
+            texto= nodo.token.texto
+            return float (texto) if "." in texto else int(texto)
+        if isinstance (nodo, Cadena):
+            return nodo.token.texto[1:-1]
+        if isinstance (nodo, Variable):
+            nombre= nodo.token.texto
+            if nombre not in self.entorno:
+                raise ErrorSemantico(
+                    f"variable '{nombre}' no ha sido declarada",
+                    nodo.token.linea,
+                    nodo.token.columna
+                )
+            return self.entorno[nombre]["valor"]
+
+        if isinstance (nodo, OperacionBinaria): 
+            izq= self.evaluar(nodo.izq)
+            der= self.evaluar(nodo.der)
+            return self.operar (izq, nodo.operador, der)
+
+    def operar (self, izq, operador, der):
+        op=operador.texto
+        if type(izq) not in (int, float) or type(der) not in (int, float):
+            raise ErrorSemantico(
+                f"no se puede usar '{op}' con valores no numéricos",
+                operador.linea,
+                operador.columna
+            )
+        if op== "+":
+            return izq + der
+        if op== "-":
+            return izq - der
+        if op== "*":
+            return izq * der
+        if op== "/":
+            if der==0:
+                raise ErrorSemantico(
+                    "Error: División por cero",
+                    operador.linea,
+                    operador.columna
+                )
+            if type(izq)==int and type(der)==int:
+                return izq // der
+                
+                
+            return izq / der
+
+        raise ErrorSemantico(
+            f"operador '{op}' no reconocido",
+            operador.linea,
+            operador.columna
+        )
+
+        
+    
+    def ejecutar(self, nodo):
+        if isinstance (nodo, Declaracion):
+            nombre = nodo.nombre.texto
+            tipo = nodo.tipo.texto
+            if nodo.nombre.texto in self.entorno:
+                linea_original = self.entorno[nodo.nombre.texto]["linea"]
+                raise ErrorSemantico(
+                    f"la variable '{nombre}' ya ha sido declarada en la linea {linea_original}",
+                    nodo.nombre.linea,
+                    nodo.nombre.columna
+                )
+            valor = self.evaluar(nodo.valor)
+            if type(valor) not in ACEPTA[tipo]:
+                raise ErrorSemantico(
+                    f"no se puede guardar un {type(valor).__name__} en la variable '{nombre}' de tipo {tipo}",
+                    nodo.nombre.linea,
+                    nodo.nombre.columna
+                )
+            self.entorno[nombre]={
+                "tipo": nodo.tipo.texto, 
+                "valor": valor,
+                "linea": nodo.nombre.linea
+            }
+
+        elif isinstance(nodo, Asignacion):
+            nombre = nodo.nombre.texto
+
+            if nombre not in self.entorno:
+                raise ErrorSemantico(
+                    f"la variable '{nombre}' no ha sido declarada",
+                    nodo.nombre.linea,
+                    nodo.nombre.columna
+                )
+
+            valor = self.evaluar(nodo.valor)
+            tipo = self.entorno[nombre]["tipo"]
+
+            if type(valor) not in ACEPTA[tipo]:
+                raise ErrorSemantico(
+                    f"no se puede guardar un {type(valor).__name__} en la variable '{nombre}' de tipo {tipo}",
+                    nodo.nombre.linea,
+                    nodo.nombre.columna
+                )
+
+            self.entorno[nombre]["valor"] = valor
+            
+        elif isinstance(nodo, Mostrar):
+            valor=self.evaluar(nodo.valor)
+            print(valor)
+
+    def ejecutar_programa(self, programa):
+        for instruccion in programa.instrucciones:
+            self.ejecutar(instruccion)
+

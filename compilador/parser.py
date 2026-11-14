@@ -1,6 +1,25 @@
 from tokens import ErrorSintactico
 from arbol import *
 
+# GRAMATICA EBNF - BETTYSCRIPT
+#
+# programa    ::= instruccion* EOF
+# instruccion ::= declaracion | asignacion
+#
+# declaracion ::= TIPO IDENTIFICADOR '=' expresion ';'
+# asignacion  ::= IDENTIFICADOR '=' expresion ';'
+#
+# expresion   ::= termino (('+' | '-') termino)*
+# termino     ::= factor (('*' | '/') factor)*
+#
+# factor      ::= NUMERO
+#               | CADENA
+#               | IDENTIFICADOR
+#               | '(' expresion ')'
+# instruccion ::= declaracion | asignacion | salida
+#
+# salida ::= 'FREDDY_ANUNCIA' '(' expresion ')' ';'
+
 class Parser:
 
     def __init__(self, tokens):
@@ -29,13 +48,21 @@ class Parser:
             instrucciones.append(self.instruccion())
         return Programa(instrucciones)
     
+ 
     def instruccion(self):
         t = self.actual()
         if t.tipo == "TIPO":
             return self.declaracion()
         if t.tipo == "IDENTIFICADOR":
             return self.asignacion()
-        raise ErrorSintactico(f"se esperaba el inicio de una instrucción y llegó '{t.texto}'",t.linea, t.columna)
+        if t.tipo == "PALABRA_RESERVADA" and t.texto == "FREDDY_ANUNCIA":
+            return self.salida()
+        raise ErrorSintactico(
+            f"se esperaba el inicio de una instrucción y llegó '{t.texto}'",
+            t.linea,
+            t.columna
+        )
+
 
     def declaracion(self):
         tipo = self.esperar("TIPO")
@@ -83,4 +110,11 @@ class Parser:
             return dentro
         raise ErrorSintactico(f"se esperaba un número, una variable o '(' y llegó '{t.texto}'",t.linea, t.columna)
 
-    
+    def salida(self):
+            palabra = self.esperar("PALABRA_RESERVADA", "FREDDY_ANUNCIA")
+            self.esperar("SIMBOLO", "(")
+            valor = self.expresion()
+            self.esperar("SIMBOLO", ")")
+            self.esperar("SIMBOLO", ";")
+            
+            return Mostrar(palabra, valor)
