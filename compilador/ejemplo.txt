@@ -1,3 +1,13 @@
-SEIS_SEMESTRES a = 5;
-FREDDY_ANUNCIA(a);
-FREDDY_ANUNCIA(b);
+
+SEIS_SEMESTRES edad = 20;
+SEIS_SEMESTRES nota = 4;
+
+SI_DON_ARMANDO_GRITA (edad >= 18) AHORA_SI {
+
+    FREDDY_ANUNCIA('Es mayor de edad');
+
+    SI_DON_ARMANDO_GRITA (nota >= 3) AHORA_SI {
+        FREDDY_ANUNCIA('Y aprobo la materia');
+    }
+
+}

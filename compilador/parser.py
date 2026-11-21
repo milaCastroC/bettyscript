@@ -4,7 +4,7 @@ from arbol import *
 # GRAMATICA EBNF - BETTYSCRIPT
 #
 # programa    ::= instruccion* EOF
-# instruccion ::= declaracion | asignacion
+# instruccion ::= declaracion | asignacion | salida | condicional
 #
 # declaracion ::= TIPO IDENTIFICADOR '=' expresion ';'
 # asignacion  ::= IDENTIFICADOR '=' expresion ';'
@@ -19,6 +19,14 @@ from arbol import *
 # instruccion ::= declaracion | asignacion | salida
 #
 # salida ::= 'FREDDY_ANUNCIA' '(' expresion ')' ';'
+#
+# bloque ::= '{' instruccion* '}'
+
+# condicional ::= 'SI_DON_ARMANDO_GRITA'
+#                 '(' condicion ')'
+#                 'AHORA_SI' bloque
+#                 ('PERDONEME_PERO_DISCULPEME' bloque)?
+
 
 class Parser:
 
@@ -57,6 +65,8 @@ class Parser:
             return self.asignacion()
         if t.tipo == "PALABRA_RESERVADA" and t.texto == "FREDDY_ANUNCIA":
             return self.salida()
+        if t.tipo == "PALABRA_RESERVADA" and t.texto == "SI_DON_ARMANDO_GRITA":
+            return self.condicional()
         raise ErrorSintactico(
             f"se esperaba el inicio de una instrucción y llegó '{t.texto}'",
             t.linea,
@@ -118,3 +128,38 @@ class Parser:
             self.esperar("SIMBOLO", ";")
             
             return Mostrar(palabra, valor)
+
+    def condicion(self):
+        izq = self.expresion()
+        operador = self.esperar("COMPARADOR")
+        der = self.expresion()
+        return Comparacion(izq, operador, der)
+
+    def bloque(self):
+        llave = self.esperar("SIMBOLO", "{")
+        instrucciones = []
+        while not (self.actual().tipo == "SIMBOLO" and self.actual().texto == "}"):
+            if self.actual().tipo == "EOF":
+                t = self.actual()
+                raise ErrorSintactico(f"falta '}}' para cerrar el bloque abierto en la línea {llave.linea}",t.linea, t.columna)
+            instrucciones.append(self.instruccion())
+        self.avanzar()
+        return instrucciones
+
+    def condicional(self):
+        palabra = self.esperar("PALABRA_RESERVADA", "SI_DON_ARMANDO_GRITA")
+
+        self.esperar("SIMBOLO", "(")
+        condicion = self.condicion()
+        self.esperar("SIMBOLO", ")")
+
+        self.esperar("PALABRA_RESERVADA", "AHORA_SI")
+        entonces = self.bloque()
+
+        sino = None
+
+        if(self.actual().tipo == "PALABRA_RESERVADA"  and self.actual().texto == "PERDONEME_PERO_DISCULPEME"):
+            self.avanzar()
+            sino = self.bloque()
+
+        return Condicional(palabra, condicion, entonces, sino)

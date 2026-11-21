@@ -39,6 +39,18 @@ class OperacionBinaria:
     operador: Token
     der: object
 
+@dataclass
+class Comparacion:
+    izq: object
+    operador: Token
+    der: object
+
+@dataclass
+class Condicional:
+    palabra: Token
+    condicion: object
+    entonces: list
+    sino: list | None
 
 def mostrar_arbol(nodo, nivel=0):
     espacio = "  " * nivel
@@ -73,3 +85,23 @@ def mostrar_arbol(nodo, nivel=0):
 
     elif isinstance(nodo, Cadena):
         print(f"{espacio}Cadena {nodo.token.texto}")
+
+    elif isinstance(nodo, Comparacion):
+            print(f"{espacio}Comparacion {nodo.operador.texto}")
+            mostrar_arbol(nodo.izq, nivel + 1)
+            mostrar_arbol(nodo.der, nivel + 1)
+
+    elif isinstance(nodo, Comparacion):
+        print(f"{espacio}Si")
+
+        print(f"{espacio}Condicion:")
+        mostrar_arbol(nodo.condicion, nivel + 2)
+
+        print(f"{espacio}Entonces:")
+        for instruccion in nodo.entonces:
+            mostrar_arbol(instruccion, nivel + 2)
+
+        if nodo.sino is not None:
+            print(f"{espacio}Sino:")
+            for instruccion in nodo.entonces:
+                        mostrar_arbol(instruccion, nivel + 2)

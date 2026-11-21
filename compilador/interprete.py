@@ -7,7 +7,9 @@ from arbol import (
     Declaracion,
     Asignacion,
     Mostrar,
-    Programa
+    Programa,
+    Comparacion,
+    Condicional
 )
 
 ACEPTA = {
@@ -42,6 +44,36 @@ class Interprete:
             izq= self.evaluar(nodo.izq)
             der= self.evaluar(nodo.der)
             return self.operar (izq, nodo.operador, der)
+
+        if isinstance (nodo, Comparacion): 
+            izq= self.evaluar(nodo.izq)
+            der= self.evaluar(nodo.der)
+            op = nodo.operador.texto
+
+            if type(izq) not in (int, float) or type(der) not in (int, float):
+                raise ErrorSemantico(
+                    f"no se puede usar '{op}' con valores no numéricos",
+                    op.linea,
+                    op.columna
+                ) 
+
+            if op == "==":
+                return izq == der
+
+            if op == "!=":
+                return izq != der
+
+            if op == "<":
+                return izq < der
+
+            if op == ">":
+                return izq > der
+
+            if op == "<=":
+                return izq <= der
+
+            if op == ">=":
+                return izq >= der
 
     def operar (self, izq, operador, der):
         op=operador.texto
@@ -127,6 +159,17 @@ class Interprete:
         elif isinstance(nodo, Mostrar):
             valor=self.evaluar(nodo.valor)
             print(valor)
+
+        elif isinstance(nodo, Condicional):
+            resultado = self.evaluar(nodo.condicion)
+
+            if resultado:
+                for instruccion in nodo.entonces:
+                    self.ejecutar(instruccion)
+
+            elif nodo.sino is not None:
+                for instruccion in nodo.sino:
+                    self.ejecutar(instruccion)
 
     def ejecutar_programa(self, programa):
         for instruccion in programa.instrucciones:

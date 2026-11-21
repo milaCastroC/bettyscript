@@ -3,8 +3,8 @@ from tokens import Token, ErrorLexico
 #Implementación BettyScript
 TIPOS = {"SEIS_SEMESTRES", "DEUDA_DE_PATRICIA", "CHISME", "BOOLEAN"}
 SIMBOLOS = {";", "(", ")", "{", "}", "[", "]","=", "!", "."}
-OPERADORES = {"+", "-", "*", ">", "<", "/"}
-OPERADORES_DOBLES = ("==", "!=", "<=", ">=")
+OPERADORES = {"+", "-", "*",  "/"}
+COMPARADOR = ("==", "!=", "<=", ">=", ">", "<")
 PALABRAS_RESERVADAS = {"MOSCORROFIO", "SI_DON_ARMANDO_GRITA", "AHORA_SI", "PERDONEME_PERO_DISCULPEME", "NI_POR_EL_CHIRAS", "Y_ADEMAS_FLUIDEZ_MAMI", "SI_NO_ES_ESTO_ES_AQUELLO", "FREDDY_ANUNCIA", "MAQUILLAR_BALANCE", "EL_DIABLO_ES_PUERCO", "AY_MARCE"}
 BOOLEANOS = {"TAN_DIVINO", "PELITEÑIDA"}
 COMENTARIO = "OJO_PUES"
@@ -104,10 +104,13 @@ def tokenizar(texto):
            
             col+=len(palabra)
         
-        elif texto.startswith (OPERADORES_DOBLES, i):
-            tokens.append(Token("OPERADOR DOBLE", texto[i:i+2], row, col))
-            i += 2
-            col += 2
+        elif any(texto.startswith(op, i) for op in COMPARADOR):
+            for operador in COMPARADOR:
+                if texto.startswith(operador, i):
+                    tokens.append(Token("COMPARADOR", operador, row, col))
+                    i += len(operador)
+                    col += len(operador)
+                    break
 
         elif c in SIMBOLOS:
             tokens.append(Token("SIMBOLO", c, row, col))
