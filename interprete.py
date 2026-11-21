@@ -331,7 +331,10 @@ class Interprete:
             
         elif isinstance(nodo, Mostrar):
             valor=self.evaluar(nodo.valor)
-            print(valor)
+            if type(valor) is bool:
+                print("TAN_DIVINO" if valor else "PELITEÑIDA")
+            else:
+                print(valor)
 
         elif isinstance(nodo, Condicional):
             resultado = self.evaluar(nodo.condicion)
