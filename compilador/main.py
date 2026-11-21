@@ -20,6 +20,11 @@ def main():
         programa = Parser(tokens).programa()
         Interprete().ejecutar_programa(programa)
 
+        # Mostrar arbol
+        # print("\n Árbol:")
+        # programa2 = Parser(tokenizar(codigo)).programa()
+        # mostrar_arbol(programa2)
+
     except ErrorDeLenguaje as e:
         print(e)
         print(f"linea = {e.linea}, columna = {e.columna}")

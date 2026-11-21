@@ -52,6 +52,17 @@ class Condicional:
     entonces: list
     sino: list | None
 
+@dataclass
+class OperacionLogica:
+    izq: object
+    operador: Token
+    der: object
+
+@dataclass
+class NegacionLogica:
+    operador: Token
+    valor: object
+
 
 @dataclass
 class Mientras:
@@ -95,25 +106,33 @@ def mostrar_arbol(nodo, nivel=0):
         print(f"{espacio}Cadena {nodo.token.texto}")
 
     elif isinstance(nodo, Comparacion):
-            print(f"{espacio}Comparacion {nodo.operador.texto}")
-            mostrar_arbol(nodo.izq, nivel + 1)
-            mostrar_arbol(nodo.der, nivel + 1)
+        print(f"{espacio}Comparacion {nodo.operador.texto}")
+        mostrar_arbol(nodo.izq, nivel + 1)
+        mostrar_arbol(nodo.der, nivel + 1)
 
-    elif isinstance(nodo, Comparacion):
-        print(f"{espacio}Si")
+    elif isinstance(nodo, OperacionLogica):
+        print(f"{espacio}OperacionLogica {nodo.operador.texto}")
+        mostrar_arbol(nodo.izq, nivel + 1)
+        mostrar_arbol(nodo.der, nivel + 1)
 
-        print(f"{espacio}Condicion:")
+    elif isinstance(nodo, NegacionLogica):
+        print(f"{espacio}NegacionLogica {nodo.operador.texto}")
+        mostrar_arbol(nodo.valor, nivel + 1)
+
+    elif isinstance(nodo, Condicional):
+        print(f"{espacio}Condicional")
+
+        print(f"{espacio}  Condicion:")
         mostrar_arbol(nodo.condicion, nivel + 2)
 
-        print(f"{espacio}Entonces:")
+        print(f"{espacio}  Entonces:")
         for instruccion in nodo.entonces:
             mostrar_arbol(instruccion, nivel + 2)
 
         if nodo.sino is not None:
-            print(f"{espacio}Sino:")
-            for instruccion in nodo.entonces:
-                        mostrar_arbol(instruccion, nivel + 2)
-
+            print(f"{espacio}  Sino:")
+            for instruccion in nodo.sino:
+                mostrar_arbol(instruccion, nivel + 2)
     
     elif isinstance(nodo, Mientras):
         print(f"{espacio}Mientras")

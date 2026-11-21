@@ -29,6 +29,21 @@ from arbol import *
 # ciclo ::= 'INICIO_DEL_CHISME'
 #           '(' condicion ')'
 #           'AHORA_SI' bloque
+# condicion    ::= condicion_o
+
+# condicion_o  ::= condicion_y
+#                  ('SI_NO_ES_ESTO_ES_AQUELLO' condicion_y)*
+
+# condicion_y  ::= condicion_no
+#                  ('Y_ADEMAS_FLUIDEZ_MAMI' condicion_no)*
+
+# condicion_no ::= 'NI_POR_EL_CHIRAS' condicion_no
+#                | condicion_atomica
+
+# comparacion  ::= expresion COMPARADOR expresion
+
+# condicion_atomica ::= comparacion
+#                     | '(' condicion ')'
 
 
 
@@ -136,10 +151,50 @@ class Parser:
             return Mostrar(palabra, valor)
 
     def condicion(self):
+        return self.condicion_o()
+
+    def condicion_o(self):
+        izq = self.condicion_y()
+        while self.actual().tipo == "PALABRA_RESERVADA" and self.actual().texto == "SI_NO_ES_ESTO_ES_AQUELLO":
+            operador = self.avanzar()
+            der = self.condicion_y()
+            izq = OperacionLogica(izq, operador, der)
+        return izq
+
+    def condicion_y(self):
+        izq = self.condicion_no()
+        while self.actual().tipo == "PALABRA_RESERVADA" and self.actual().texto == "Y_ADEMAS_FLUIDEZ_MAMI":
+            operador = self.avanzar()
+            der = self.condicion_no()
+            izq = OperacionLogica(izq, operador, der)
+        return izq
+
+    def condicion_no(self):
+        t = self.actual()
+        if t.tipo == "PALABRA_RESERVADA" and t.texto == "NI_POR_EL_CHIRAS":
+            operador = self.avanzar()
+            valor = self.condicion_no()
+            return NegacionLogica(operador, valor)
+        return self.condicion_atomica()
+
+    def comparacion(self):
         izq = self.expresion()
         operador = self.esperar("COMPARADOR")
         der = self.expresion()
         return Comparacion(izq, operador, der)
+
+    def condicion_atomica(self):
+        inicio = self.pos
+        try:
+            return self.comparacion()
+        except ErrorSintactico as error:
+            self.pos = inicio
+            if self.actual().tipo == "SIMBOLO" and self.actual().texto == "(":
+                self.avanzar() # '('
+                dentro = self.condicion() # condicion
+                self.esperar("SIMBOLO", ")") # ')'
+                return dentro
+            raise error
 
     def bloque(self):
         llave = self.esperar("SIMBOLO", "{")

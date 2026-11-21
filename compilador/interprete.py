@@ -9,7 +9,9 @@ from arbol import (
     Mostrar,
     Comparacion,
     Condicional,
-    Mientras
+    Mientras,
+    OperacionLogica,
+    NegacionLogica
 )
 
 ACEPTA = {
@@ -57,6 +59,60 @@ class Interprete:
             izq= self.evaluar(nodo.izq)
             der= self.evaluar(nodo.der)
             return self.operar (izq, nodo.operador, der)
+
+        if isinstance (nodo, OperacionLogica):
+            izq = self.evaluar(nodo.izq)
+            op = nodo.operador.texto
+            
+            if type(izq) != bool:
+                raise ErrorSemantico(
+                    f"no se puede usar '{op}' con valores no booleanos",
+                    nodo.operador.linea,
+                    nodo.operador.columna
+                )
+            
+            if op == "Y_ADEMAS_FLUIDEZ_MAMI":
+                if not izq:
+                    return False
+                der = self.evaluar(nodo.der)
+
+                if type(der) != bool:
+                    raise ErrorSemantico(
+                        f"no se puede usar '{op}' con valores no booleanos",
+                        nodo.operador.linea,
+                        nodo.operador.columna
+                    )
+                return der
+            
+            if op == "SI_NO_ES_ESTO_ES_AQUELLO":
+                if izq:
+                    return True
+                der = self.evaluar(nodo.der)
+
+                if type(der) != bool:
+                    raise ErrorSemantico(
+                        f"no se puede usar '{op}' con valores no booleanos",
+                        nodo.operador.linea,
+                        nodo.operador.columna
+                    )
+                return der
+            
+            raise ErrorSemantico(
+                f"operador lógico '{op}' no reconocido",
+                nodo.operador.linea,
+                nodo.operador.columna
+            )
+
+        if isinstance (nodo, NegacionLogica):
+            valor = self.evaluar(nodo.valor)
+
+            if type(valor) != bool:
+                raise ErrorSemantico(
+                    f"no se puede usar '{nodo.operador.texto}' con valores no booleanos",
+                    nodo.operador.linea,
+                    nodo.operador.columna
+                )
+            return not valor
 
         if isinstance (nodo, Comparacion): 
             izq= self.evaluar(nodo.izq)

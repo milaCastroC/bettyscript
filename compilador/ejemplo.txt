@@ -1,7 +1,4 @@
-SEIS_SEMESTRES contador = 0;
-
-INICIO_DEL_CHISME (contador < 3) AHORA_SI {
-    SEIS_SEMESTRES temporal = contador + 10;
-    FREDDY_ANUNCIA(temporal);
-    contador = contador + 1;
+SEIS_SEMESTRES n = 3;
+SI_DON_ARMANDO_GRITA (NI_POR_EL_CHIRAS (n > 5)) AHORA_SI {
+    FREDDY_ANUNCIA('Correcto');
 }
