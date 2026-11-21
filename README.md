@@ -9,16 +9,144 @@
 - Sebastian Botero Gonzalez
 - Maria Camila Castro Cardona
 
-## 2. Cómo ejecutar
+## 2. Cómo ejecutar BettyScript
 
-**Requisito:** Python 3.10 o superior. No requiere dependencias externas.
+### Requisitos previos
 
-Clonar el repositorio:
+Para ejecutar el intérprete es necesario contar con:
+
+- **Python 3.10 o superior**, instalado y disponible desde la terminal.
+- Una terminal de comandos, como PowerShell, CMD o la terminal integrada de Visual Studio Code.
+- **Git**, si se desea clonar el repositorio.
+
+BettyScript no requiere instalar dependencias externas, ya que utiliza únicamente módulos incluidos en la biblioteca estándar de Python.
+
+### Obtener el proyecto
+
+Clonar el repositorio desde GitHub:
 
 ```bash
 git clone https://github.com/milaCastroC/bettyscript.git
+```
+
+Ingresar a la carpeta del proyecto:
+
+```bash
 cd bettyscript
 ```
+
+Verificar que Python esté instalado:
+
+```bash
+python --version
+```
+
+### Estructura del repositorio
+
+```text
+bettyscript/
+├── README.md
+├── tokens.py
+├── lexer.py
+├── arbol.py
+├── parser.py
+├── interprete.py
+├── main.py
+└── ejemplos/
+    ├── ejemplo.txt
+    ├── tabla_del_3.txt
+    ├── factorial_5.txt
+    └── promedio_notas.txt
+```
+
+Los archivos principales del intérprete están ubicados en la raíz del repositorio. La carpeta `ejemplos` contiene los programas de muestra escritos en BettyScript.
+
+### Ejecutar un programa
+
+Desde la **raíz del repositorio**, ejecutar el siguiente comando:
+
+```bash
+python main.py programa.txt
+```
+
+Donde `programa.txt` representa la ruta del archivo que contiene el código fuente escrito en BettyScript.
+
+Para ejecutar un programa de la carpeta `ejemplos`, utilizar:
+
+```bash
+python main.py ejemplos/ejemplo.txt
+```
+
+El intérprete procesa el archivo, verifica su estructura y ejecuta las instrucciones. Los resultados se muestran en la terminal mediante `FREDDY_ANUNCIA()`.
+
+Si el programa contiene errores léxicos, sintácticos o semánticos, BettyScript informa el tipo de error, su línea y columna, e indica la posición en el código fuente mediante el símbolo `^`.
+
+### Ejecutar los programas de muestra
+
+Se incluyen los tres programas solicitados en la entrega final.
+
+**1. Tabla de multiplicar del 3**
+
+```bash
+python main.py ejemplos/tabla_del_3.txt
+```
+
+Salida esperada:
+
+```text
+3
+6
+9
+12
+15
+```
+
+**2. Factorial de 5**
+
+```bash
+python main.py ejemplos/factorial_5.txt
+```
+
+Salida esperada:
+
+```text
+120
+```
+
+**3. Promedio de tres notas**
+
+```bash
+python main.py ejemplos/promedio_notas.txt
+```
+
+Salida esperada:
+
+```text
+4.0
+aprueba
+```
+
+### Ejecución de programas con lectura de datos
+
+BettyScript también permite ingresar información desde la terminal mediante `AY_MARCE()`.
+
+Cuando el programa contiene esta expresión, el intérprete solicita el valor al usuario y, si corresponde, lo convierte al tipo de la variable.
+
+Por ejemplo:
+
+```text
+SEIS_SEMESTRES edad = AY_MARCE();
+FREDDY_ANUNCIA(edad);
+```
+
+Al ejecutar el programa e introducir `21`, la terminal muestra:
+
+```text
+AY_MARCE (SEIS_SEMESTRES)> 21
+21
+```
+
+Si el valor introducido no es compatible con el tipo solicitado, se genera un error semántico.
 
 ## 3. Ficha del lenguaje
 
