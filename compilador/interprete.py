@@ -4,6 +4,7 @@ from arbol import (
     Variable,
     Cadena,
     OperacionBinaria,
+    OperacionUnaria,
     Declaracion,
     Asignacion,
     Mostrar,
@@ -40,7 +41,17 @@ class Interprete:
         if isinstance (nodo, Numero):
             texto= nodo.token.texto
             return float (texto) if "." in texto else int(texto)
-        
+
+        if isinstance (nodo, OperacionUnaria):
+            valor = self.evaluar(nodo.valor)
+            if type(valor) not in (int, float):
+                raise ErrorSemantico(
+                    f"no se puede usar '{nodo.operador.texto}' con valores no numéricos",
+                    nodo.operador.linea,
+                    nodo.operador.columna
+                )
+            return -valor
+            
         if isinstance (nodo, Cadena):
             return nodo.token.texto[1:-1]
         

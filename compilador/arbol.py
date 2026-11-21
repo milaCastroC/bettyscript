@@ -40,6 +40,11 @@ class OperacionBinaria:
     der: object
 
 @dataclass
+class OperacionUnaria:
+    operador: Token
+    valor: object
+
+@dataclass
 class Comparacion:
     izq: object
     operador: Token
@@ -95,6 +100,10 @@ def mostrar_arbol(nodo, nivel=0):
         print(f"{espacio}OperacionBinaria {nodo.operador.texto}")
         mostrar_arbol(nodo.izq, nivel + 1)
         mostrar_arbol(nodo.der, nivel + 1)
+
+    elif isinstance(nodo, OperacionUnaria):
+        print(f"{espacio}OperacionUnaria {nodo.operador.texto}")
+        mostrar_arbol(nodo.valor, nivel + 1)
 
     elif isinstance(nodo, Numero):
         print(f"{espacio}Numero {nodo.token.texto}")

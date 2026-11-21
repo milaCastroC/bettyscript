@@ -11,7 +11,8 @@ from arbol import *
 # expresion   ::= termino (('+' | '-') termino)*
 # termino     ::= factor (('*' | '/') factor)*
 #
-# factor      ::= NUMERO
+# factor      ::= '-' factor
+#               | NUMERO
 #               | CADENA
 #               | IDENTIFICADOR
 #               | '(' expresion ')'
@@ -128,17 +129,26 @@ class Parser:
     
     def factor(self):
         t = self.actual()
+        if t.tipo == "OPERADOR" and t.texto == "-":
+            operador = self.avanzar()  # '-'
+            valor = self.factor()  # factor
+            return OperacionUnaria(operador, valor)
+        
         if t.tipo == "NUMERO":
             return Numero(self.avanzar())
+        
         if t.tipo == "CADENA":
             return Cadena(self.avanzar())
+        
         if t.tipo == "IDENTIFICADOR":
             return Variable(self.avanzar())
+        
         if t.tipo == "SIMBOLO" and t.texto == "(":
             self.avanzar() # '('
             dentro = self.expresion() # expresion
             self.esperar("SIMBOLO", ")") # ')'
             return dentro
+        
         raise ErrorSintactico(f"se esperaba un número, una variable o '(' y llegó '{t.texto}'",t.linea, t.columna)
 
     def salida(self):

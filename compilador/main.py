@@ -21,7 +21,7 @@ def main():
         Interprete().ejecutar_programa(programa)
 
         # Mostrar arbol
-        # print("\n Árbol:")
+        # print("\nÁrbol:")
         # programa2 = Parser(tokenizar(codigo)).programa()
         # mostrar_arbol(programa2)
 
