@@ -1,0 +1,9 @@
+SEIS_SEMESTRES saldo = 100;
+
+SI_DON_ARMANDO_GRITA (saldo >= 50) AHORA_SI {
+    SEIS_SEMESTRES descuento = 20;
+    saldo = saldo - descuento;
+    FREDDY_ANUNCIA(descuento);
+}
+
+FREDDY_ANUNCIA(saldo);
