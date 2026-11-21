@@ -9,7 +9,8 @@ from arbol import (
     Mostrar,
     Programa,
     Comparacion,
-    Condicional
+    Condicional,
+    Mientras
 )
 
 ACEPTA = {
@@ -17,8 +18,6 @@ ACEPTA = {
     "DEUDA_DE_PATRICIA": (int, float),
     "CHISME": (str,)
 }
-
-
 
 class Interprete:
     def __init__(self):
@@ -170,6 +169,22 @@ class Interprete:
             elif nodo.sino is not None:
                 for instruccion in nodo.sino:
                     self.ejecutar(instruccion)
+
+        
+        elif isinstance(nodo, Mientras):
+            vueltas = 0
+            while self.evaluar(nodo.condicion):
+                if vueltas >= 100000:
+                    raise ErrorSemantico(
+                        "el ciclo superó 100000 vueltas; "
+                        "¿falta actualizar la variable de la condición?",
+                        nodo.palabra.linea,
+                        nodo.palabra.columna
+                    )
+                for instruccion in nodo.cuerpo:
+                    self.ejecutar(instruccion)
+                vueltas += 1
+
 
     def ejecutar_programa(self, programa):
         for instruccion in programa.instrucciones:

@@ -4,8 +4,7 @@ from arbol import *
 # GRAMATICA EBNF - BETTYSCRIPT
 #
 # programa    ::= instruccion* EOF
-# instruccion ::= declaracion | asignacion | salida | condicional
-#
+# instruccion ::= declaracion | asignacion | salida | condicional | ciclo
 # declaracion ::= TIPO IDENTIFICADOR '=' expresion ';'
 # asignacion  ::= IDENTIFICADOR '=' expresion ';'
 #
@@ -26,6 +25,11 @@ from arbol import *
 #                 '(' condicion ')'
 #                 'AHORA_SI' bloque
 #                 ('PERDONEME_PERO_DISCULPEME' bloque)?
+#
+# ciclo ::= 'INICIO_DEL_CHISME'
+#           '(' condicion ')'
+#           'AHORA_SI' bloque
+
 
 
 class Parser:
@@ -67,6 +71,8 @@ class Parser:
             return self.salida()
         if t.tipo == "PALABRA_RESERVADA" and t.texto == "SI_DON_ARMANDO_GRITA":
             return self.condicional()
+        if (t.tipo == "PALABRA_RESERVADA"and t.texto == "INICIO_DEL_CHISME"):
+            return self.ciclo()
         raise ErrorSintactico(
             f"se esperaba el inicio de una instrucción y llegó '{t.texto}'",
             t.linea,
@@ -163,3 +169,16 @@ class Parser:
             sino = self.bloque()
 
         return Condicional(palabra, condicion, entonces, sino)
+
+    def ciclo(self):
+        palabra = self.esperar("PALABRA_RESERVADA","INICIO_DEL_CHISME")
+
+        self.esperar("SIMBOLO", "(")
+        condicion = self.condicion()
+        self.esperar("SIMBOLO", ")")
+
+        self.esperar("PALABRA_RESERVADA", "AHORA_SI")
+
+        cuerpo = self.bloque()
+
+        return Mientras(palabra, condicion, cuerpo)

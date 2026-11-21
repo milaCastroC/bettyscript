@@ -52,6 +52,14 @@ class Condicional:
     entonces: list
     sino: list | None
 
+
+@dataclass
+class Mientras:
+    palabra: Token
+    condicion: object
+    cuerpo: list
+
+
 def mostrar_arbol(nodo, nivel=0):
     espacio = "  " * nivel
 
@@ -105,3 +113,15 @@ def mostrar_arbol(nodo, nivel=0):
             print(f"{espacio}Sino:")
             for instruccion in nodo.entonces:
                         mostrar_arbol(instruccion, nivel + 2)
+
+    
+    elif isinstance(nodo, Mientras):
+        print(f"{espacio}Mientras")
+
+        print(f"{espacio}  Condicion:")
+        mostrar_arbol(nodo.condicion, nivel + 2)
+
+        print(f"{espacio}  Cuerpo:")
+        for instruccion in nodo.cuerpo:
+            mostrar_arbol(instruccion, nivel + 2)
+
