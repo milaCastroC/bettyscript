@@ -1,279 +1,283 @@
 # BettyScript
 
-## Nombre del grupo
+## 1. Nombre del lenguaje e integrantes
 
-**BettyScript**
+**Nombre del lenguaje:** BettyScript
 
-## Integrantes
+**Integrantes del equipo:**
+- Mariluz Calderon Guevara
+- Sebastian Botero Gonzalez
+- Maria Camila Castro Cardona
 
-- Botero
-- Calderon
-- Castro
+## 2. Cómo ejecutar
 
----
+**Requisito:** Python 3.10 o superior. No requiere dependencias externas.
 
-# Reglas del lenguaje
+Clonar el repositorio:
 
-## 1. Reglas con una sola condición
-
-### Regla 1: Verificación de chisme real
-
-Si `rumor_confirmado` es verdadero, se imprime **“¡Atención Ecomoda, último minuto!”**.
-
-```bettyscript
-SI_DON_ARMANDO_GRITA (rumor_confirmado == TAN_DIVINO) AHORA_SI {
-    FREDDY_ANUNCIA("¡Atención Ecomoda, último minuto!");
-}
+```bash
+git clone https://github.com/milaCastroC/bettyscript.git
+cd bettyscript
 ```
 
-### Regla 2: Prevención de nulos en diseños
+## 3. Ficha del lenguaje
 
-Si `coleccion_actual` tiene un valor nulo, se muestra **“¡Hugo se quedó sin conceptos!”**.
+### Nombre y origen
 
-```bettyscript
-SI_DON_ARMANDO_GRITA (coleccion_actual == MOSCORROFIO) AHORA_SI {
-    FREDDY_ANUNCIA("¡Hugo se quedó sin conceptos!");
-}
-```
+**BettyScript** es un lenguaje de programación educativo e interpretado, desarrollado en Python e inspirado en la telenovela colombiana *Yo soy Betty, la fea*.
 
-### Regla 3: Control de acceso privado en gerencia
+Su nombre combina **Betty**, protagonista de la historia, con **Script**, término utilizado en programación. El lenguaje transforma expresiones y referencias de Ecomoda en palabras reservadas, permitiendo aplicar conceptos de análisis léxico, análisis sintáctico e interpretación de programas mediante una sintaxis original.
 
-Declara un dato privado de tipo texto llamado `secreto_presidencial` con el valor `"Terramoda"`.  
-Si `secretaria_ocupada` es verdadero, se muestra **“No se puede pasar a la oficina principal.”**.
+### Tabla de traducción de Java a BettyScript
 
-```bettyscript
-BAJE_LA_VOZ_BEATRIZ CHISME secreto_presidencial = "Terramoda";
-
-SI_DON_ARMANDO_GRITA (secretaria_ocupada == TAN_DIVINO) AHORA_SI {
-    FREDDY_ANUNCIA("No se puede pasar a la oficina principal.");
-}
-```
-
----
-
-## 2. Reglas con condiciones compuestas usando Y / O
-
-### Regla 4: Filtro de contratación con Y lógico
-
-Si `estudio_finanzas` y `recomendacion_valida` son verdaderos, se muestra **“Bienvenida al corporativo.”**.
-
-```bettyscript
-SI_DON_ARMANDO_GRITA (
-    estudio_finanzas == TAN_DIVINO
-    Y_ADEMAS_FLUIDEZ_MAMI
-    recomendacion_valida == TAN_DIVINO
-) AHORA_SI {
-    FREDDY_ANUNCIA("Bienvenida al corporativo.");
-}
-```
-
-### Regla 5: Emergencia de Patricia con O lógico
-
-Si `sin_gasolina` o `tarjeta_bloqueada` son verdaderos, se muestra **“¡Alguien auxilie a la peliteñida!”**.
-
-```bettyscript
-SI_DON_ARMANDO_GRITA (
-    sin_gasolina == TAN_DIVINO
-    SI_NO_ES_ESTO_ES_AQUELLO
-    tarjeta_bloqueada == TAN_DIVINO
-) AHORA_SI {
-    FREDDY_ANUNCIA("¡Alguien auxilie a la peliteñida!");
-}
-```
-
-### Regla 6: Condición compuesta mixta (Y / O) para almuerzos
-
-Si `es_del_cuartel` es verdadero y además `es_hora_almuerzo` o `inesita_termino` son verdaderos, se muestra **“¡Vámonos a almorzar, muchachas!”**.
-
-```bettyscript
-SI_DON_ARMANDO_GRITA (
-    es_del_cuartel == TAN_DIVINO
-    Y_ADEMAS_FLUIDEZ_MAMI
-    (
-        es_hora_almuerzo == TAN_DIVINO
-        SI_NO_ES_ESTO_ES_AQUELLO
-        inesita_termino == TAN_DIVINO
-    )
-) AHORA_SI {
-    FREDDY_ANUNCIA("¡Vámonos a almorzar, muchachas!");
-}
-```
-
----
-
-## 3. Reglas que combinan tipos de datos distintos (Numérico + Booleano)
-
-### Regla 7: Alerta de deuda y cuentas congeladas
-
-Si `deuda_dolares` es mayor a `1.000.000` y `cuentas_congeladas` es verdadero, se lanza una excepción financiera con el mensaje **“¡Nos van a quitar Ecomoda!”**.
-
-```bettyscript
-DEUDA_DE_PATRICIA deuda_dolares = 2000000;
-
-SI_DON_ARMANDO_GRITA (
-    deuda_dolares > 1000000
-    Y_ADEMAS_FLUIDEZ_MAMI
-    cuentas_congeladas == TAN_DIVINO
-) AHORA_SI {
-    AY_MARCE ExcepcionFinanciera("¡Nos van a quitar Ecomoda!");
-}
-```
-
-### Regla 8: Restricción de presupuesto para diseñadores
-
-Si `presupuesto_diseno` es menor a `5.000` y `usar_telas_nacionales` es verdadero, se muestra **“Hugo Lombardi ha renunciado furioso.”**.
-
-```bettyscript
-SEIS_SEMESTRES presupuesto_diseno = 3500;
-
-SI_DON_ARMANDO_GRITA (
-    presupuesto_diseno < 5000
-    Y_ADEMAS_FLUIDEZ_MAMI
-    usar_telas_nacionales == TAN_DIVINO
-) AHORA_SI {
-    FREDDY_ANUNCIA("Hugo Lombardi ha renunciado furioso.");
-}
-```
-
----
-
-## 4. Otras reglas del lenguaje
-
-### Regla 9: Alternativa diplomática con Else
-
-Si `armando_presente` es verdadero, se muestra **“Paso la llamada a presidencia.”**; de lo contrario, se muestra **“El doctor se encuentra en una reunión muy importante.”**.
-
-```bettyscript
-SI_DON_ARMANDO_GRITA (armando_presente == TAN_DIVINO) AHORA_SI {
-    FREDDY_ANUNCIA("Paso la llamada a presidencia.");
-} PERDONEME_PERO_DISCULPEME {
-    FREDDY_ANUNCIA("El doctor se encuentra en una reunión muy importante.");
-}
-```
-
-### Regla 10: Negación estricta con NOT (!)
-
-Si `es_miembro_junta` no es verdadero, se muestra **“Usted no tiene acceso a esta sección.”**.
-
-```bettyscript
-SI_DON_ARMANDO_GRITA (NI_POR_EL_CHIRAS es_miembro_junta) AHORA_SI {
-    FREDDY_ANUNCIA("Usted no tiene acceso a esta sección.");
-}
-```
-
-### Regla 11: Bloque Try protegido
-
-Se intenta mostrar **“Presentando informe a la junta...”** y, si ocurre un error, se muestra **“¡Nos descubrieron los auditores!”**.
-
-```bettyscript
-MAQUILLAR_BALANCE {
-    FREDDY_ANUNCIA("Presentando informe a la junta...");
-} EL_DIABLO_ES_PUERCO (error) {
-    FREDDY_ANUNCIA("¡Nos descubrieron los auditores!");
-}
-```
-
-### Regla 12: Retorno final de datos
-
-Devuelve verdadero.
-
-```bettyscript
-ENTREGUE_EL_BALANCE TAN_DIVINO;
-```
-
-### Regla 13: Definición pública global
-
-Declara una variable pública de tipo texto llamada `estado_actual` con el valor `"En crisis"`.
-
-```bettyscript
-QUE_SE_ENTERE_TODA_ECOMODA CHISME estado_actual = "En crisis";
-```
-
-### Regla 14: Validación de saldos vacíos
-
-Si `saldo_celular` es igual a `0`, se muestra **“Por favor, ¿me presta para una llamadita?”**.
-
-```bettyscript
-SI_DON_ARMANDO_GRITA (saldo_celular == 0) AHORA_SI {
-    FREDDY_ANUNCIA("Por favor, ¿me presta para una llamadita?");
-}
-```
-
-### Regla 15: Lanzamiento directo de error
-
-Si `mercedes_rayado` es verdadero, se lanza una excepción de tragedia con el mensaje **“¡Me arruinaron el carro!”**.
-
-```bettyscript
-SI_DON_ARMANDO_GRITA (mercedes_rayado == TAN_DIVINO) AHORA_SI {
-    AY_MARCE ExcepcionTragedia("¡Me arruinaron el carro!");
-}
-```
-
----
-
-# Tabla de clasificación de tipos de datos
-
-| **Variable** | **Tipo en Java** | **Ejemplo** |
+| Concepto | Java | BettyScript |
 |---|---|---|
-| `rumor_confirmado` | `boolean` | `true` |
-| `coleccion_actual` | `String` | `"verano"` |
-| `secreto_presidencial` | `String` | `"Terramoda"` |
-| `secretaria_ocupada` | `boolean` | `false` |
-| `estudio_finanzas` | `boolean` | `true` |
-| `recomendacion_valida` | `boolean` | `false` |
-| `sin_gasolina` | `boolean` | `true` |
-| `tarjeta_bloqueada` | `boolean` | `false` |
-| `es_del_cuartel` | `boolean` | `true` |
-| `es_hora_almuerzo` | `boolean` | `false` |
-| `inesita_termino` | `boolean` | `true` |
-| `deuda_dolares` | `double` | `1000000` |
-| `cuentas_congeladas` | `boolean` | `false` |
-| `presupuesto_diseno` | `int` | `3500` |
-| `usar_telas_nacionales` | `boolean` | `false` |
-| `armando_presente` | `boolean` | `true` |
-| `es_miembro_junta` | `boolean` | `false` |
-| `estado_actual` | `String` | `"En Crisis"` |
-| `saldo_celular` | `int` | `0` |
-| `mercedes_rayado` | `boolean` | `true` |
+| Tipo entero | `int` | `SEIS_SEMESTRES` |
+| Tipo decimal | `double` | `DEUDA_DE_PATRICIA` |
+| Tipo cadena | `String` | `CHISME` |
+| Tipo booleano | `boolean` | `CHISME_CONFIRMADO` |
+| Verdadero | `true` | `TAN_DIVINO` |
+| Falso | `false` | `PELITEÑIDA` |
+| Asignación | `=` | `=` |
+| Fin de instrucción | `;` | `;` |
+| Salida | `System.out.println()` | `FREDDY_ANUNCIA()` |
+| Condicional | `if` | `SI_DON_ARMANDO_GRITA` |
+| Inicio del bloque verdadero | `{` | `AHORA_SI {` |
+| Alternativa | `else` | `PERDONEME_PERO_DISCULPEME` |
+| Ciclo | `while` | `INICIO_DEL_CHISME` |
+| Comentario de línea | `//` | `OJO_PUES` |
+| Comentario de bloque | `/* ... */` | `CARTA_DE_ARMANDO ... SALUDOS_CORDIALES` |
 
-## Reglas de operaciones entre tipos de datos
+### Decisión de diseño
 
-BettyScript permite realizar operaciones aritméticas únicamente entre valores numéricos, correspondientes a los tipos `SEIS_SEMESTRES` (entero) y `DEUDA_DE_PATRICIA` (decimal).
+La principal decisión de diseño fue **reemplazar las palabras reservadas tradicionales por expresiones inspiradas en la cultura popular colombiana**, conservando elementos de programación como los operadores matemáticos, la asignación mediante `=`, el fin de instrucción `;` y los bloques delimitados por `{ }`.
 
-### Operadores permitidos
+A diferencia de Java, BettyScript utiliza expresiones como `SI_DON_ARMANDO_GRITA` para las condiciones, `INICIO_DEL_CHISME` para los ciclos y `FREDDY_ANUNCIA` para mostrar información.
 
-| Operador | Descripción | Regla |
+Esta decisión permite mantener una estructura de programación reconocible y, al mismo tiempo, construir un lenguaje con identidad propia.
+
+## 4. Gramática final en EBNF
+
+```ebnf
+programa ::= instruccion* EOF
+
+instruccion ::= declaracion
+              | asignacion
+              | salida
+              | condicional
+              | ciclo
+
+declaracion ::= TIPO IDENTIFICADOR "=" valor ";"
+
+asignacion ::= IDENTIFICADOR "=" valor ";"
+
+salida ::= "FREDDY_ANUNCIA" "(" valor ")" ";"
+
+bloque ::= "{" instruccion* "}"
+
+condicional ::= "SI_DON_ARMANDO_GRITA"
+                "(" condicion ")"
+                "AHORA_SI" bloque
+                ("PERDONEME_PERO_DISCULPEME" bloque)?
+
+ciclo ::= "INICIO_DEL_CHISME"
+          "(" condicion ")"
+          "AHORA_SI" bloque
+
+valor ::= condicion
+
+condicion ::= condicion_o
+
+condicion_o ::= condicion_y
+                ("SI_NO_ES_ESTO_ES_AQUELLO" condicion_y)*
+
+condicion_y ::= condicion_no
+                ("Y_ADEMAS_FLUIDEZ_MAMI" condicion_no)*
+
+condicion_no ::= "NI_POR_EL_CHIRAS" condicion_no
+               | condicion_atomica
+
+condicion_atomica ::= expresion (COMPARADOR expresion)?
+                    | "(" condicion ")"
+
+expresion ::= termino (("+" | "-") termino)*
+
+termino ::= factor (("*" | "/") factor)*
+
+factor ::= "-" factor
+         | NUMERO
+         | CADENA
+         | BOOLEAN
+         | IDENTIFICADOR
+         | "(" expresion ")"
+         | lectura
+
+lectura ::= "AY_MARCE" "(" ")"
+
+TIPO ::= "SEIS_SEMESTRES"
+       | "DEUDA_DE_PATRICIA"
+       | "CHISME"
+       | "CHISME_CONFIRMADO"
+
+BOOLEAN ::= "TAN_DIVINO"
+          | "PELITEÑIDA"
+
+COMPARADOR ::= "=="
+             | "!="
+             | "<"
+             | ">"
+             | "<="
+             | ">="
+```
+
+**Elementos léxicos:**
+- `IDENTIFICADOR`: nombre de variable que comienza con una letra y puede contener letras, números y guiones bajos.
+- `NUMERO`: número entero o decimal, utilizando el punto como separador decimal.
+- `CADENA`: texto delimitado por comillas simples.
+- `EOF`: final del archivo.
+
+Los comentarios son reconocidos y descartados por el analizador léxico.
+
+**Precedencia de operadores**, de mayor a menor:
+
+1. Agrupación mediante paréntesis.
+2. Negativo unario (`-`).
+3. Multiplicación y división (`*`, `/`).
+4. Suma y resta (`+`, `-`).
+5. Comparaciones (`==`, `!=`, `<`, `>`, `<=`, `>=`).
+6. Negación lógica (`NI_POR_EL_CHIRAS`).
+7. Conjunción lógica (`Y_ADEMAS_FLUIDEZ_MAMI`).
+8. Disyunción lógica (`SI_NO_ES_ESTO_ES_AQUELLO`).
+
+## 5. Reglas de operaciones entre tipos
+
+BettyScript utiliza **tipado explícito**. Cada variable debe declararse indicando su tipo y los valores asignados deben ser compatibles.
+
+### Tipos de datos
+
+| Tipo BettyScript | Tipo interno en Python | Valores admitidos |
 |---|---|---|
-| `+` | Suma | Acepta enteros y decimales. |
-| `-` | Resta | Acepta enteros y decimales. |
-| `*` | Multiplicación | Acepta enteros y decimales. |
-| `/` | División | Entre enteros produce un entero; si interviene un decimal, produce un decimal. |
+| `SEIS_SEMESTRES` | `int` | Enteros |
+| `DEUDA_DE_PATRICIA` | `int`, `float` | Enteros y decimales |
+| `CHISME` | `str` | Cadenas |
+| `CHISME_CONFIRMADO` | `bool` | Verdadero y falso |
 
-### Restricciones
+### Operaciones aritméticas
 
-- No se permiten operaciones aritméticas entre cadenas (`CHISME`).
-- No se permiten operaciones entre valores numéricos y cadenas.
-- Los valores booleanos no pueden utilizarse como operandos aritméticos.
-- La división entre cero produce un error semántico.
-- Los errores semánticos indican la línea y columna del operador que ocasionó el problema.
+Los operadores `+`, `-`, `*` y `/` aceptan exclusivamente valores numéricos.
 
-### Ejemplos
+| Operandos | Resultado |
+|---|---|
+| Entero con entero | Entero en suma, resta y multiplicación |
+| Entero con decimal | Decimal |
+| Decimal con decimal | Decimal |
+| Entero dividido entre entero | División entera |
+| División con operandos decimales | División real |
+| Negativo unario aplicado a número | Número con signo invertido |
 
-**Válido:**
+La división entre enteros utiliza `//` de Python, que redondea hacia abajo. La división con decimales utiliza `/`.
 
-```bettyscript
-SEIS_SEMESTRES a = 7;
-DEUDA_DE_PATRICIA b = 2.0;
-FREDDY_ANUNCIA(a / b);
+No se permiten operaciones aritméticas entre cadenas, booleanos o valores numéricos y cadenas. La división entre cero genera un error semántico.
+
+### Comparaciones y operaciones lógicas
+
+- Los valores numéricos admiten `==`, `!=`, `<`, `>`, `<=` y `>=`.
+- Los valores booleanos admiten `==` y `!=` entre sí.
+- Las operaciones de orden entre booleanos no están permitidas.
+- Los operadores `Y_ADEMAS_FLUIDEZ_MAMI`, `SI_NO_ES_ESTO_ES_AQUELLO` y `NI_POR_EL_CHIRAS` trabajan con valores booleanos.
+- Las operaciones lógicas de conjunción y disyunción utilizan evaluación de cortocircuito.
+- Las condiciones de `SI_DON_ARMANDO_GRITA` e `INICIO_DEL_CHISME` deben devolver un valor booleano.
+
+### Alcance de variables
+
+BettyScript utiliza entornos anidados. Una variable declarada dentro de un bloque deja de estar disponible al terminar ese bloque.
+
+Los bloques pueden consultar y modificar variables de entornos exteriores. También se permite el sombreado de variables, donde una declaración local tiene prioridad sobre otra externa con el mismo nombre.
+
+Cada iteración de un ciclo utiliza un entorno local independiente.
+
+### Validación de tipos y errores
+
+El intérprete genera errores semánticos ante asignaciones incompatibles, variables no declaradas, operaciones inválidas o divisiones entre cero.
+
+Los errores incluyen línea y columna. El programa también muestra un indicador `^` para señalar la ubicación del error dentro del código fuente.
+
+Los ciclos tienen un límite de 100.000 iteraciones para evitar ejecuciones potencialmente infinitas.
+
+## 6. Requerimientos electivos implementados
+
+### 6.1. Electivo 1: Tipo booleano
+
+**Objetivo:** permitir declarar variables booleanas y utilizarlas en expresiones y condiciones.
+
+Se implementó el tipo `CHISME_CONFIRMADO`, con los siguientes valores:
+
+- `TAN_DIVINO`: verdadero (`True`).
+- `PELITEÑIDA`: falso (`False`).
+
+Las variables booleanas pueden almacenar resultados de comparaciones, participar en operaciones lógicas y utilizarse directamente en condicionales y ciclos.
+
+**Ejemplo:**
+
+```text
+SEIS_SEMESTRES nota = 4;
+
+CHISME_CONFIRMADO aprobado = nota >= 3;
+
+SI_DON_ARMANDO_GRITA (aprobado) AHORA_SI {
+    FREDDY_ANUNCIA('Materia aprobada');
+}
 ```
 
-Salida: `3.5`
+**Salida esperada:**
 
-**Inválido:**
-
-```bettyscript
-CHISME mensaje = 'Hola';
-FREDDY_ANUNCIA(mensaje + 5);
+```text
+Materia aprobada
 ```
 
-Resultado: error semántico por operación entre valores no numéricos.
+**Implementación:** el lexer identifica los literales booleanos, el parser construye nodos `Booleano` y el intérprete utiliza el tipo `bool` de Python para evaluar y validar los valores.
+
+Las asignaciones incompatibles producen errores semánticos.
+
+### 6.2. Electivo 2: Lectura de datos
+
+**Objetivo:** permitir que el usuario introduzca datos desde la consola, convertirlos al tipo esperado y detectar entradas inválidas.
+
+Se implementó la expresión `AY_MARCE()`.
+
+Cuando se utiliza directamente en una declaración o asignación, el intérprete identifica el tipo de la variable receptora y convierte el dato introducido.
+
+| Tipo | Entrada válida | Conversión |
+|---|---|---|
+| `SEIS_SEMESTRES` | `25` | Entero |
+| `DEUDA_DE_PATRICIA` | `4.5` | Decimal |
+| `CHISME` | `Betty` | Cadena |
+| `CHISME_CONFIRMADO` | `TAN_DIVINO` | Verdadero |
+| `CHISME_CONFIRMADO` | `PELITEÑIDA` | Falso |
+
+**Ejemplo:**
+
+```text
+CHISME nombre = AY_MARCE();
+SEIS_SEMESTRES edad = AY_MARCE();
+
+FREDDY_ANUNCIA(nombre);
+FREDDY_ANUNCIA(edad);
+```
+
+**Ejecución esperada:**
+
+```text
+AY_MARCE (CHISME)> Betty
+AY_MARCE (SEIS_SEMESTRES)> 25
+Betty
+25
+```
+
+**Implementación:** el parser reconoce `AY_MARCE()` y construye un nodo `Lectura`. El intérprete utiliza `input()` para solicitar información y convierte el resultado según el tipo esperado.
+
+Las entradas numéricas se validan mediante expresiones regulares y las booleanas únicamente admiten `TAN_DIVINO` o `PELITEÑIDA`.
+
+Si la entrada no puede convertirse al tipo solicitado, se genera un error semántico con línea y columna.
+
+La conversión según el tipo se aplica a lecturas directas en declaraciones y asignaciones. Sin una variable receptora, la lectura devuelve una cadena.
