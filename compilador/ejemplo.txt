@@ -1,17 +1,7 @@
+SEIS_SEMESTRES contador = 0;
 
-SEIS_SEMESTRES n = 1;
-SEIS_SEMESTRES suma = 0;
-
-INICIO_DEL_CHISME (n <= 5) AHORA_SI {
-    suma = suma + n;
-    n = n + 1;
+INICIO_DEL_CHISME (contador < 3) AHORA_SI {
+    SEIS_SEMESTRES temporal = contador + 10;
+    FREDDY_ANUNCIA(temporal);
+    contador = contador + 1;
 }
-
-FREDDY_ANUNCIA(suma);
-
-SI_DON_ARMANDO_GRITA (suma > 10) AHORA_SI {
-    FREDDY_ANUNCIA('grande');
-} PERDONEME_PERO_DISCULPEME {
-    FREDDY_ANUNCIA('pequeño');
-}
-
