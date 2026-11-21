@@ -5,20 +5,24 @@ from arbol import *
 #
 # programa    ::= instruccion* EOF
 # instruccion ::= declaracion | asignacion | salida | condicional | ciclo
-# declaracion ::= TIPO IDENTIFICADOR '=' expresion ';'
-# asignacion  ::= IDENTIFICADOR '=' expresion ';'
+# declaracion ::= TIPO IDENTIFICADOR '=' valor ';'
+# asignacion  ::= IDENTIFICADOR '=' valor ';'
+#
+# valor ::= condicion_o
 #
 # expresion   ::= termino (('+' | '-') termino)*
 # termino     ::= factor (('*' | '/') factor)*
 #
-# factor      ::= '-' factor
-#               | NUMERO
-#               | CADENA
-#               | IDENTIFICADOR
-#               | '(' expresion ')'
+# factor ::= '-' factor
+#            | NUMERO
+#            | CADENA
+#            | BOOLEAN
+#            | IDENTIFICADOR
+#            | '(' expresion ')'
+
 # instruccion ::= declaracion | asignacion | salida
 #
-# salida ::= 'FREDDY_ANUNCIA' '(' expresion ')' ';'
+# salida      ::= 'FREDDY_ANUNCIA' '(' valor ')' ';'
 #
 # bloque ::= '{' instruccion* '}'
 
@@ -100,14 +104,14 @@ class Parser:
         tipo = self.esperar("TIPO")
         nombre = self.esperar("IDENTIFICADOR") 
         self.esperar("SIMBOLO", "=")
-        valor = self.expresion() 
+        valor = self.valor() 
         self.esperar("SIMBOLO", ";") 
         return Declaracion(tipo, nombre, valor)
 
     def asignacion(self):
         nombre = self.esperar("IDENTIFICADOR")
         self.esperar("SIMBOLO", "=")
-        valor = self.expresion()
+        valor = self.valor()
         self.esperar("SIMBOLO", ";")
         return Asignacion(nombre, valor)
 
@@ -136,6 +140,9 @@ class Parser:
         
         if t.tipo == "NUMERO":
             return Numero(self.avanzar())
+
+        if t.tipo == "BOOLEAN":
+            return Booleano(self.avanzar())
         
         if t.tipo == "CADENA":
             return Cadena(self.avanzar())
@@ -154,7 +161,7 @@ class Parser:
     def salida(self):
             palabra = self.esperar("PALABRA_RESERVADA", "FREDDY_ANUNCIA")
             self.esperar("SIMBOLO", "(")
-            valor = self.expresion()
+            valor = self.valor()
             self.esperar("SIMBOLO", ")")
             self.esperar("SIMBOLO", ";")
             
@@ -189,10 +196,16 @@ class Parser:
 
     def comparacion(self):
         izq = self.expresion()
-        operador = self.esperar("COMPARADOR")
-        der = self.expresion()
-        return Comparacion(izq, operador, der)
+        if self.actual().tipo == "COMPARADOR":
+            operador = self.avanzar()
+            der = self.expresion()
+            return Comparacion(izq, operador, der)
 
+        return izq
+
+    def valor(self):
+        return self.condicion()
+    
     def condicion_atomica(self):
         inicio = self.pos
         try:

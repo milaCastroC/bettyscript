@@ -30,6 +30,11 @@ def main():
             print(linea_codigo)
             print(" " * (e.columna - 1) + "^")
 
+        elif (e.linea == len(lineas) + 1 and codigo.endswith(("\n", "\r"))and lineas):
+            ultima_linea = lineas[-1]
+            print(ultima_linea)
+            print(" " * len(ultima_linea) + "^")
+
 
 if __name__ == "__main__":
     main()

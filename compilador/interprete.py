@@ -12,13 +12,15 @@ from arbol import (
     Condicional,
     Mientras,
     OperacionLogica,
-    NegacionLogica
+    NegacionLogica,
+    Booleano
 )
 
 ACEPTA = {
     "SEIS_SEMESTRES": (int,),
     "DEUDA_DE_PATRICIA": (int, float),
-    "CHISME": (str,)
+    "CHISME": (str,),
+    "BOOLEAN": (bool,)
 }
 
 class Entorno:
@@ -130,6 +132,21 @@ class Interprete:
             der= self.evaluar(nodo.der)
             op = nodo.operador.texto
 
+            # Igualdad entre booleanos
+            if type(izq) is bool and type(der) is bool:
+                if op == "==":
+                    return izq == der
+
+                if op == "!=":
+                    return izq != der
+
+                raise ErrorSemantico(
+                    f"el operador '{op}' no admite booleanos",
+                    nodo.operador.linea,
+                    nodo.operador.columna
+                )
+
+
             if type(izq) not in (int, float) or type(der) not in (int, float):
                 raise ErrorSemantico(
                     f"no se puede usar '{op}' con valores no numéricos",
@@ -154,6 +171,14 @@ class Interprete:
 
             if op == ">=":
                 return izq >= der
+
+        if isinstance(nodo, Booleano):
+            if nodo.token.texto == "TAN_DIVINO":
+                return True
+
+            if nodo.token.texto == "PELITEÑIDA":
+                return False
+
 
     def operar (self, izq, operador, der):
         op=operador.texto
@@ -248,6 +273,13 @@ class Interprete:
         elif isinstance(nodo, Condicional):
             resultado = self.evaluar(nodo.condicion)
 
+            if type(resultado) is not bool:
+                raise ErrorSemantico(
+                    "la condición debe ser de tipo BOOLEAN",
+                    nodo.palabra.linea,
+                    nodo.palabra.columna
+                )
+
             if resultado:
                 self.ejecutar_bloque(nodo.entonces)
 
@@ -258,7 +290,19 @@ class Interprete:
         elif isinstance(nodo, Mientras):
             vueltas = 0
             
-            while self.evaluar(nodo.condicion):
+            while True:
+                resultado = self.evaluar(nodo.condicion)
+
+                if type(resultado) is not bool:
+                    raise ErrorSemantico(
+                        "la condición del ciclo debe ser BOOLEAN",
+                        nodo.palabra.linea,
+                        nodo.palabra.columna
+                    )
+
+                if not resultado:
+                    break
+                
                 if vueltas >= 100000:
                     raise ErrorSemantico(
                         "el ciclo superó 100000 vueltas; "

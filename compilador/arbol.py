@@ -75,6 +75,10 @@ class Mientras:
     condicion: object
     cuerpo: list
 
+@dataclass
+class Booleano:
+    token: Token
+
 
 def mostrar_arbol(nodo, nivel=0):
     espacio = "  " * nivel
@@ -152,4 +156,7 @@ def mostrar_arbol(nodo, nivel=0):
         print(f"{espacio}  Cuerpo:")
         for instruccion in nodo.cuerpo:
             mostrar_arbol(instruccion, nivel + 2)
+
+    elif isinstance(nodo, Booleano):
+        print(f"{espacio}Booleano {nodo.token.texto}")
 
