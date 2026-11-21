@@ -14,20 +14,21 @@ def main():
 
     with open(sys.argv[1], "r", encoding="utf-8") as f:
         codigo = f.read()
-
+        lineas = codigo.splitlines()
     try:
         tokens = tokenizar(codigo)
         programa = Parser(tokens).programa()
         Interprete().ejecutar_programa(programa)
 
         # Mostrar arbol
-        # print("\nÁrbol:")
-        # programa2 = Parser(tokenizar(codigo)).programa()
-        # mostrar_arbol(programa2)
+        # mostrar_arbol(programa)
 
     except ErrorDeLenguaje as e:
         print(e)
-        print(f"linea = {e.linea}, columna = {e.columna}")
+        if 1 <= e.linea <= len(lineas):
+            linea_codigo = lineas[e.linea - 1]
+            print(linea_codigo)
+            print(" " * (e.columna - 1) + "^")
 
 
 if __name__ == "__main__":
