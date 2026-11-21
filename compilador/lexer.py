@@ -1,7 +1,7 @@
 from tokens import Token, ErrorLexico
 
 #Implementación BettyScript
-TIPOS = {"SEIS_SEMESTRES", "DEUDA_DE_PATRICIA", "CHISME", "BOOLEAN"}
+TIPOS = {"SEIS_SEMESTRES", "DEUDA_DE_PATRICIA", "CHISME", "CHISME_CONFIRMADO"}
 SIMBOLOS = {";", "(", ")", "{", "}", "[", "]","=", "!", "."}
 OPERADORES = {"+", "-", "*",  "/"}
 COMPARADOR = ("==", "!=", "<=", ">=", ">", "<")

@@ -80,6 +80,11 @@ class Booleano:
     token: Token
 
 
+@dataclass
+class Lectura:
+    palabra: Token
+
+
 def mostrar_arbol(nodo, nivel=0):
     espacio = "  " * nivel
 
@@ -159,4 +164,9 @@ def mostrar_arbol(nodo, nivel=0):
 
     elif isinstance(nodo, Booleano):
         print(f"{espacio}Booleano {nodo.token.texto}")
+
+    
+    elif isinstance(nodo, Lectura):
+        print(f"{espacio}Lectura {nodo.palabra.texto}")
+
 

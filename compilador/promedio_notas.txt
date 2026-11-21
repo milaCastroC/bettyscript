@@ -1,0 +1,10 @@
+
+DEUDA_DE_PATRICIA promedio = (3.0 + 4.0 + 5.0) / 3.0;
+
+FREDDY_ANUNCIA(promedio);
+
+SI_DON_ARMANDO_GRITA (promedio >= 3.0) AHORA_SI {
+    FREDDY_ANUNCIA('aprueba');
+} PERDONEME_PERO_DISCULPEME {
+    FREDDY_ANUNCIA('reprueba');
+}

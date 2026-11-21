@@ -50,6 +50,16 @@ from arbol import *
 # condicion_atomica ::= comparacion
 #                     | '(' condicion ')'
 
+# lectura ::= 'AY_MARCE' '(' ')'
+#
+# factor ::= '-' factor
+#            | NUMERO
+#            | CADENA
+#            | BOOLEAN
+#            | IDENTIFICADOR
+#            | '(' expresion ')'
+#            | lectura
+
 
 
 class Parser:
@@ -146,6 +156,17 @@ class Parser:
         
         if t.tipo == "CADENA":
             return Cadena(self.avanzar())
+
+        if (
+            t.tipo == "PALABRA_RESERVADA"
+            and t.texto == "AY_MARCE"
+        ):
+            palabra = self.avanzar()
+
+            self.esperar("SIMBOLO", "(")
+            self.esperar("SIMBOLO", ")")
+
+            return Lectura(palabra)
         
         if t.tipo == "IDENTIFICADOR":
             return Variable(self.avanzar())

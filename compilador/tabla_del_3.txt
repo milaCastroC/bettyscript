@@ -1,0 +1,7 @@
+
+SEIS_SEMESTRES n = 1;
+
+INICIO_DEL_CHISME (n <= 5) AHORA_SI {
+    FREDDY_ANUNCIA(n * 3);
+    n = n + 1;
+}

@@ -1,4 +1,5 @@
 from tokens import ErrorSemantico
+import re
 from arbol import (
     Numero,
     Variable,
@@ -9,6 +10,7 @@ from arbol import (
     Asignacion,
     Mostrar,
     Comparacion,
+    Lectura,
     Condicional,
     Mientras,
     OperacionLogica,
@@ -20,7 +22,7 @@ ACEPTA = {
     "SEIS_SEMESTRES": (int,),
     "DEUDA_DE_PATRICIA": (int, float),
     "CHISME": (str,),
-    "BOOLEAN": (bool,)
+    "CHISME_CONFIRMADO": (bool,)
 }
 
 class Entorno:
@@ -39,6 +41,59 @@ class Interprete:
     def __init__(self):
         self.entorno=Entorno()
 
+
+    def leer_entrada(self, nodo, tipo=None):
+        etiqueta = tipo if tipo is not None else "CHISME"
+
+        try:
+            texto = input(f"AY_MARCE ({etiqueta})> ")
+        except EOFError:
+            raise ErrorSemantico(
+                "no se recibió ningún valor de entrada",
+                nodo.palabra.linea,
+                nodo.palabra.columna
+            )
+
+        if tipo is None or tipo == "CHISME":
+            return texto
+
+        valor = texto.strip()
+
+        if tipo == "SEIS_SEMESTRES":
+            if re.fullmatch(r"[+-]?\d+", valor):
+                try:
+                    return int(valor)
+                except ValueError:
+                    pass
+        
+        
+        elif tipo == "DEUDA_DE_PATRICIA":
+            if re.fullmatch(r"[+-]?\d+", valor):
+                return int(valor)
+
+            if re.fullmatch(r"[+-]?\d+\.\d+", valor):
+                return float(valor)
+
+
+        elif tipo == "CHISME_CONFIRMADO":
+            if valor == "TAN_DIVINO":
+                return True
+
+            if valor == "PELITEÑIDA":
+                return False
+
+        raise ErrorSemantico(
+            f"no se puede convertir '{texto}' al tipo {tipo}",
+            nodo.palabra.linea,
+            nodo.palabra.columna
+        )
+
+    def evaluar_asignable(self, nodo, tipo):
+        if isinstance(nodo, Lectura):
+            return self.leer_entrada(nodo, tipo)
+
+        return self.evaluar(nodo)
+
     def evaluar (self, nodo):
         if isinstance (nodo, Numero):
             texto= nodo.token.texto
@@ -56,6 +111,11 @@ class Interprete:
             
         if isinstance (nodo, Cadena):
             return nodo.token.texto[1:-1]
+
+        
+        if isinstance(nodo, Lectura):
+            return self.leer_entrada(nodo)
+
         
         if isinstance (nodo, Variable):
             nombre= nodo.token.texto
@@ -96,7 +156,7 @@ class Interprete:
                         nodo.operador.columna
                     )
                 return der
-            
+
             if op == "SI_NO_ES_ESTO_ES_AQUELLO":
                 if izq:
                     return True
@@ -116,7 +176,8 @@ class Interprete:
                 nodo.operador.columna
             )
 
-        if isinstance (nodo, NegacionLogica):
+
+        if isinstance(nodo, NegacionLogica):
             valor = self.evaluar(nodo.valor)
 
             if type(valor) != bool:
@@ -125,7 +186,9 @@ class Interprete:
                     nodo.operador.linea,
                     nodo.operador.columna
                 )
+
             return not valor
+
 
         if isinstance (nodo, Comparacion): 
             izq= self.evaluar(nodo.izq)
@@ -228,7 +291,7 @@ class Interprete:
                     nodo.nombre.linea,
                     nodo.nombre.columna
                 )
-            valor = self.evaluar(nodo.valor)
+            valor = self.evaluar_asignable(nodo.valor, tipo)
             
             if type(valor) not in ACEPTA[tipo]:
                 raise ErrorSemantico(
@@ -253,9 +316,9 @@ class Interprete:
                     nodo.nombre.linea,
                     nodo.nombre.columna
                 )
-
-            valor = self.evaluar(nodo.valor)
             tipo = entorno.variables[nombre]["tipo"]
+            valor = self.evaluar_asignable(nodo.valor, tipo)
+
 
             if type(valor) not in ACEPTA[tipo]:
                 raise ErrorSemantico(
@@ -275,7 +338,7 @@ class Interprete:
 
             if type(resultado) is not bool:
                 raise ErrorSemantico(
-                    "la condición debe ser de tipo BOOLEAN",
+                    "la condición debe ser de tipo CHISME_CONFIRMADO",
                     nodo.palabra.linea,
                     nodo.palabra.columna
                 )
@@ -295,7 +358,7 @@ class Interprete:
 
                 if type(resultado) is not bool:
                     raise ErrorSemantico(
-                        "la condición del ciclo debe ser BOOLEAN",
+                        "la condición debe ser de tipo CHISME_CONFIRMADO",
                         nodo.palabra.linea,
                         nodo.palabra.columna
                     )
