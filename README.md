@@ -63,19 +63,26 @@ Los archivos principales del intérprete están ubicados en la raíz del reposit
 
 ### Ejecutar un programa
 
-Desde la **raíz del repositorio**, ejecutar el siguiente comando:
+Desde la raíz del repositorio, ejecutar el intérprete indicando la ruta del archivo fuente:
 
 ```bash
-python main.py programa.txt
+python main.py ejemplos/tabla_del_3.txt
 ```
 
-Donde `programa.txt` representa la ruta del archivo que contiene el código fuente escrito en BettyScript.
-
-Para ejecutar un programa de la carpeta `ejemplos`, utilizar:
+También pueden ejecutarse los otros programas incluidos:
 
 ```bash
-python main.py ejemplos/ejemplo.txt
+python main.py ejemplos/factorial_5.txt
+python main.py ejemplos/promedio_notas.txt
 ```
+
+**Sintaxis general:**
+
+```bash
+python main.py ruta_del_archivo.txt
+```
+
+El argumento debe corresponder a un archivo `.txt` existente que contenga instrucciones escritas en BettyScript.
 
 El intérprete procesa el archivo, verifica su estructura y ejecuta las instrucciones. Los resultados se muestran en la terminal mediante `FREDDY_ANUNCIA()`.
 
