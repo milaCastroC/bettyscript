@@ -1,0 +1,5 @@
+OJO_PUES Requisito 3: Numeros negativos
+
+SEIS_SEMESTRES x = -5;
+SEIS_SEMESTRES y = -(x + 2);
+FREDDY_ANUNCIA(y);

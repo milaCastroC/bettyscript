@@ -1,0 +1,3 @@
+OJO_PUES Requisito 4: Errores se señalan en el codigo
+
+SEIS_SEMESTRES x = 5 @;

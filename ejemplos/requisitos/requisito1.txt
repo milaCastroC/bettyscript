@@ -1,3 +1,5 @@
+OJO_PUES Requisito 1: Alcance de variables
+
 SEIS_SEMESTRES saldo = 100;
 
 SI_DON_ARMANDO_GRITA (saldo >= 50) AHORA_SI {
